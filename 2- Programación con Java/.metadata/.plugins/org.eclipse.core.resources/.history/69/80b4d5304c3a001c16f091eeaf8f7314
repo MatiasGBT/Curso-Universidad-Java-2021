@@ -1,0 +1,5 @@
+package peliculas.datos;
+
+public interface AccesoDatos {
+
+}

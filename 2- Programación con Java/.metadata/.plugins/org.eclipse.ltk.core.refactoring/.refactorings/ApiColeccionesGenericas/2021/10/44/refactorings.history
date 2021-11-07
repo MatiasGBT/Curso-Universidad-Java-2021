@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;test.TestColecciones&apos; to &apos;TestColeccionesGenericas&apos;&#x0D;&#x0A;- Original project: &apos;ApiColeccionesGenericas&apos;&#x0D;&#x0A;- Original element: &apos;test.TestColecciones&apos;&#x0D;&#x0A;- Renamed element: &apos;test.TestColeccionesGenericas&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;TestColecciones&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;test{TestColecciones.java[TestColecciones" matchStrategy="1" name="TestColeccionesGenericas" qualified="false" references="true" similarDeclarations="false" stamp="1635520465518" textual="false" version="1.0"/>
+</session>

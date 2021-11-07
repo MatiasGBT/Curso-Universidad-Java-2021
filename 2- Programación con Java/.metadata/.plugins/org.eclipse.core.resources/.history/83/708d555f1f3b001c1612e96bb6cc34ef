@@ -1,0 +1,22 @@
+package peliculas.datos;
+
+import java.util.List;
+import peliculas.domain.*;
+
+//Contiene las operaciones a ejecutar en el archivo de películas.txt
+public interface AccesoDatos {
+	
+	boolean existe(String nombreArchivo);
+	
+	List<Pelicula> listar(String nombreArchivo);
+	
+	void escribir(Pelicula pelicula, String nombreArchivo, boolean anexar);
+	
+	String buscar(String nombreArchivo, String buscar);
+	
+	public static void crear(String nombreArchivo) {
+		
+	}
+	
+	void borrar(String nombreArchivo);
+}

@@ -1,0 +1,54 @@
+package laboratoriofinal.main;
+
+import javax.swing.JOptionPane;
+import peliculas.datos.AccesoDatosImpl;
+import peliculas.negocio.CatalogoPeliculasImpl;
+import peliculas.excepciones.*;
+
+public class LaboratorioFinalMain {
+
+	public static void main(String[] args) {
+		int menu;
+		String res="";
+		CatalogoPeliculasImpl catalogo=new CatalogoPeliculasImpl();
+		
+		do {
+			menu=0;
+			try {
+				menu=Integer.parseInt(JOptionPane.showInputDialog("Ingresa lo que queres hacer:"
+						+ "\n1-Iniciar archivo (lo crea si no esta creado y lo abre)."
+						+ "\n2-Agregar película."
+						+ "\n3-Listar películas (las muestra en consola)."
+						+ "\n4-Buscar película (por nombre)."
+						+ "\n5-Borrar una película del catalogo."));
+			} catch (Exception e) {
+				e.printStackTrace(System.out);
+			}
+
+			
+			switch (menu) {
+			case 1:
+				catalogo.iniciarArchivo("Catalogo.txt");
+				break;
+			case 2:
+				catalogo.agregarPelicula("Catalogo.txt");
+				break;
+			case 3:
+				catalogo.listarPeliculas("Catalogo.txt");
+				break;
+			case 4:
+				catalogo.buscarPelicula("Catalogo.txt");
+				break;
+			case 5:
+				catalogo.borrarPelicula("Catalogo.txt");
+				break;
+			default:
+				JOptionPane.showMessageDialog(null, "Acción inválida");
+				continue;
+			}
+			res=JOptionPane.showInputDialog("¿Desea hacer algo más?");
+		} while (res.equalsIgnoreCase("si"));
+		AccesoDatosImpl acceso=new AccesoDatosImpl();
+		acceso.borrar("Catalogo.txt");
+	}
+}

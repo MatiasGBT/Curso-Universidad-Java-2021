@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\BELTARiT\Desktop\1- Fundamentos Java\.metadata\.plugins\org.eclipse.jdt.core
+3053047547.index
+1532137209.index

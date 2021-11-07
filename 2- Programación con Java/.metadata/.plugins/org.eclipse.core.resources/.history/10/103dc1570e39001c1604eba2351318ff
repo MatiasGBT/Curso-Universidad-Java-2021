@@ -1,0 +1,19 @@
+package test;
+
+import static manejoarchivos.ManejoArchivos.crearArchivo;
+
+public class TestManejoArchivos {
+
+	public static void main(String[] args) {
+		//Primero creamos una variable del tipo manejo archivos.
+		var nombreArchivo="prueba.txt";
+		crearArchivo(nombreArchivo);
+		//Si nos fijamos en los archivos del proyecto, se habra creado el archivo.
+		
+		//También se le puede pasar una ruta.
+		var nombreArchivo2="\\C:\\Users\\BELTARiT\\Desktop\\carpeta\\prueba.txt";
+		crearArchivo(nombreArchivo2);
+		//Tenemos que asegurarnos de que la carpeta tenga permisos para escribirse.
+	}
+
+}

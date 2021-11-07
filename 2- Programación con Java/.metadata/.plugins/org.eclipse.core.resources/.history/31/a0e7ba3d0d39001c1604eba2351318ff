@@ -1,0 +1,14 @@
+package test;
+
+import static manejoarchivos.ManejoArchivos.crearArchivo;
+
+public class TestManejoArchivos {
+
+	public static void main(String[] args) {
+		//Primero creamos una variable del tipo manejo archivos.
+		var nombreArchivo="prueba.txt";
+		crearArchivo(nombreArchivo);
+		//Si nos fijamos en los archivos del proyecto, se habra creado el archivo.
+	}
+
+}

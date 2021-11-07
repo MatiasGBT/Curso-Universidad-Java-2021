@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="enumeración.Dias"/>
+    <fullyQualifiedTypeName name="domain.Persona"/>
+    <fullyQualifiedTypeName name="paquete1.Clase1"/>
+    <fullyQualifiedTypeName name="paquete1.Clase2"/>
+    <fullyQualifiedTypeName name="domain.Gerente"/>
+    <fullyQualifiedTypeName name="domain.TipoEscritura"/>
+    <fullyQualifiedTypeName name="domain.Empleado"/>
+    <fullyQualifiedTypeName name="domain.FiguraGeometrica"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
+    <fullyQualifiedTypeName name="domain.PersonaBean"/>
+    <fullyQualifiedTypeName name="excepciones.OperacionExcepciones"/>
+    <fullyQualifiedTypeName name="aritmetica.Aritmetica"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.sun.tools.javac.util.List"/>
+    <fullyQualifiedTypeName name="genericos.ClaseGenerica"/>
+    <fullyQualifiedTypeName name="peliculas.datos.AccesoDatos"/>
+    <fullyQualifiedTypeName name="java.awt.Desktop"/>
+    <fullyQualifiedTypeName name="peliculas.negocio.CatalogoPeliculasImpl"/>
+    <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
+    <fullyQualifiedTypeName name="java.io.FileReader"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="peliculas.excepciones.AccesoDatosEx"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.io.File"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="peliculas.datos.IAccesoDatos"/>
+    <fullyQualifiedTypeName name="peliculas.domain.Pelicula"/>
+    <fullyQualifiedTypeName name="com.sun.tools.javac.parser.Scanner"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="peliculas.negocio.ICatalogoPeliculas"/>
+</qualifiedTypeNameHistroy>

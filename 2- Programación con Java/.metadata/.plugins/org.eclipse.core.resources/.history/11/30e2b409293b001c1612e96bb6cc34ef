@@ -1,0 +1,38 @@
+package laboratoriofinal.main;
+
+import javax.swing.JOptionPane;
+
+import peliculas.negocio.CatalogoPeliculasImpl;
+
+public class LaboratorioFinalMain {
+
+	public static void main(String[] args) {
+		int menu;
+		CatalogoPeliculasImpl catalogo=new CatalogoPeliculasImpl();
+		
+		menu=Integer.parseInt(JOptionPane.showInputDialog("Ingresa lo que queres hacer:"
+				+ "\n1-Iniciar archivo (lo crea si no esta creado y lo abre)."
+				+ "\n2-Agregar película."
+				+ "\n3-Listar películas (las muestra en consola)."
+				+ "\n4-Buscar película (por nombre)."
+				+ "\n>4-Salir."));
+		
+		switch (menu) {
+		case 1:
+			catalogo.iniciarArchivo("Catalogo.txt");
+			break;
+		case 2:
+			catalogo.agregarPelicula("Catalogo.txt");
+			break;
+		case 3:
+			catalogo.listarPeliculas("Catalogo.txt");
+			break;
+		case 4:
+			catalogo.buscarPelicula("Catalogo.txt", "Batman");
+			break;
+		default:
+			break;
+		}
+	}
+
+}
