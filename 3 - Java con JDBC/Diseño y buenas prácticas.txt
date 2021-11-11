@@ -1,0 +1,27 @@
+En una arquitectura Java empresarial, es común que la aplicación se divida en varias capas, las cuales se
+encargan de realizar tareas específicas.
+
+Las buenas prácticas y los patrones de diseño se encargan de reducir la complejidad y los problemas de un sistema.
+-Las buenas prácticas incluyen temas de codificación, división de responsabilidades en capas lógicas, etc.
+-Los patrones de diseño resuelven un problema que se presenta de forma recurrente (un patrón) en el
+desarrollo de un sistema, particularmente en sistemas orientados a objetos.
+
+Capas de un sistema:
+-Capa de presentación: Se encarga de administrar el flujo entre distintas pantallas del sistema y
+de procesar los datos del usuario (formularios) y desplegar la información a este.
+-Capa de negocio: Se encarga de procesar la lógica de negocio y los servicios que debe manejar el sistema.
+-Capa de datos: Se encarga de la comunicación con la base de datos, archivos y/u otras fuentes de
+información.
+Las capas se intercomunican para procesar la información.
+
+Cohesión y acoplamiento:
+Al diseñar nuestros modulos de software, es probable que requiramos de cambios posteriores
+conforme las necesidades de la aplicación cambien. El diseño de nuestro sistema puede afectar
+de manera directa en el costo y en el tiempo para realizar dichos cambios.
+-El objetivo del diseño es minimizar costos de desarrollo.
+-La cohesión es la medida en la que un componente de software se dedica a realizar
+solo la tarea para la cual fue creado, delegando tareas complementarias a otros componentes.
+-El acoplamiento es la medida en que los cambios de un componente requieren cambios de otro componente.
+Mide el grado de dependencia entre dos o más elementos.
+-El objetivo del diseño de software es tener una alta cohesión y un bajo acoplamiento entre
+los componentes del software.

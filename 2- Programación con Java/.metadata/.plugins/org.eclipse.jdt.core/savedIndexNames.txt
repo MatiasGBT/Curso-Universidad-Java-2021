@@ -1,3 +1,2 @@
-INDEX VERSION 1.131+C:\Users\BELTARiT\Desktop\gdrf\.metadata\.plugins\org.eclipse.jdt.core
-3460880079.index
-2190914602.index
+INDEX VERSION 1.131+C:\Users\BELTARiT\Desktop\Escuela\Curso-Universidad-Java-2021\2- Programación con Java\.metadata\.plugins\org.eclipse.jdt.core
+3532263036.index
