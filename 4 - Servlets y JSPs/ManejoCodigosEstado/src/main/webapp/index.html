@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Códigos de Estado</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Códigos de Estado</h1>
+        <!-- En este ejercicio utilizaremos un formulario de registro con usuario y contraseña.
+        Si los valores proporcionados son correctos (los valores los definiremos del lado del servidor) 
+        el resultado debe de ser correcto, si no, utilizaremos un código de estado del usuario no autorizado-->
+        <fieldset>
+            <legend>Formulario de autorización</legend>
+            <form name="form1" action="/ManejoCodigosEstado/Servlet" method="post"> <!-- El name no lo utilizaremos pero es una buena práctica ponerlo porque se usa mucho en JS -->
+                Usuario: <input type="text" name="usuario">
+                <br><br>
+                Password: <input type="password" name="password">
+                <br><br>
+                <input type="submit" value="Enviar"/>
+            </form>
+        </fieldset>
+    </body>
+</html>

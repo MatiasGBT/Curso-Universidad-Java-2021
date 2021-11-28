@@ -1,0 +1,33 @@
+Inclusión de archivos utilizando JSP:
+La inclusión de archivos es agregar un JSP dentro de otro, sin embargo, existen 2 formas de realizar esta acción
+cuando utilizamos JSPs:
+-Inclusión estática (o inclusión en tiempo de traducción/translate time): <%@ include file="paginaRelativa.jsp" %>
+ Utilizamos la directiva include y con el atributo file indicamos el JSP a incluir.
+-Inclusión dinamica (o en tiempo de ejecución/request time): <jsp:include page="paginaRelativa.jsp"/>
+ Utilizamos una acción (se revisa más adelante en el tema de JavaBeans).
+
+Inclusión estática:
+-Sintaxis: <%@ include file="paginaRelativa.jsp" %>
+-Objetivo:
+ -Reutilizar código que puede provenir de un texto plano, HTML o un JSP.
+ -En este caso, el JSP se que incluye puede afectar al JSP incluyente
+-Notas:
+ -En este caso no se delega el control al JSP incluiso, sino que se incluye al JSP, generando un único JSP.
+ Hay que recordar que los JSPs se compilan al final en un Servlet.
+ -Una vez que tengamos un JSP (o más bien un Servlet) de manera unica el cual contenga ambos JSP,
+ ya se podrán compartir variables y métodos entre los diversos JSP que utilicemos.
+ Con la inclusión estática, para tener la versión más reciente del JSP que estamos incluyendo, se recomienda
+ compilar y reconstruir nuevamente el proyecto debido a que esta inclusión no garantiza que tengamos la última
+ versión del JSP incluído debido a que el contenido de este se va a vaciar en el JSP principal.
+
+Inclusión dinamica:
+-Sintaxis: <jsp:include page="paginaRelativa.jsp"/>
+-Objetivo:
+ -Reutilizar código en texto plano, HTML o un JSP.
+ -Permite reutilizar el contenido sin alterar al JSP que incluye el contenido a reutilizar.
+ En este caso no se mezclan los JSPs, lo que hace que el JSP principal no sufra ninguna alteración.
+-Notas:
+ -El JSP principal delega el control al JSP incluído y la salida del JSP se agrega al JSP principal.
+ -No se comparten variables o métodos entre los JSPs, pero garantiza tener la versión más reciente siempre.
+ -La página debe de ser relativa a la aplicación Web (debemos utilizar "/" y especificar la ruta relativa donde se encuentra el JSP a incluir).
+ -También se pueden incluir archivos privados (desde la carpeta WEB-INF).

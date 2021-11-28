@@ -1,0 +1,57 @@
+Conceptos del patrón de diseño MVC (modelo vista controlador):
+Un patrón de diseño permite solucionar problemas comunes que se presentan al momento de crear aplicaciones. En
+particular, en las aplicaciones web nos interesa separar la vista de los datos y unirlos por medio de un componente
+que hace de controlador, mientras que los datos hacen de modelo.
+-Los Servlets están enfocados en controlar el flujo de la petición HTTP.
+-Los JSPs están enfocados en desplegar información de la aplicación web. En este caso, la información es proveída
+ por los Servlets y la información que se comparte entre estos componentes suele manejarse con JavaBeans.
+-El patrón de diseño MVC (Modelo Vista Controlador) permite integrar a los JSP´s (Vista), a los Servlets (Controlador)
+y a los JavaBeans (Modelo) con el fin de crear aplicaciones web más robustas y fáciles de mantener.
+
+Frameworks que utilizan el patrón MVC:
+Hay varios frameworks que permiten implementar el patrón MVC.
+-JSP/Servlets: Se implementa manualmente con ayuda del objeto RequestDispatcher para controlar el flujo de la aplicación.
+-Struts: Es un framework de Apache el cual utiliza JSPs (Vista) con tags de Struts, ActionForm (Modelo),
+ Action (Controlador), entre otros componentes que facilitan este patrón de diseño.
+-JavaServer Faces (JSF): Es una tecnología que utiliza conceptos como JSPs (Vista) con tags de JSF,
+ ManagedBean (Controlador) y JavaBeans (Modelo).
+-SpringMVC: Es una extensión del framework de Spring, que utiliza JSP (Vista) con tags de Spring,
+ clases Java (Controladores) y JavaBeans (Modelo).
+Un patrón de diseño es simplemente una guía general y cada framework define la especificación según las mejores
+prácticas deesde el punto de vista de cada framework. Cada framework implementa la guía como mejor le parece
+para representar este patrón de diseño MVC.
+
+Arquitectura MVC con JSP´s y Serlvets:
+El flujo inicia con un formulario HTML, esta información está almacenada en nuestro cliente.
+Una vez que nuestro cliente envía la petición del formulario hacia el servidor web, quien va a procesar esta petición
+es un Servlet (controlador) y, a pesar que en ejercicios anteriores hemos colocado a un JSP para manejar directamente 
+formularios,  esta no es buena práctica puesto que las peticiones las debe de procesar un Servlet controlador.
+Una vez que el Servlet controlador ha recibido la petición, una de sus tareas puede ser procesar los parámetros del formulario HTML si es 
+que aplica y una vez que ya tenemos procesado los parámetros del formulario, normalmente lo que hacemos es apoyarnos de JavaBeans 
+para almacenar o procesar la información de lógica de negocio o lógica de presentación de nuestra aplicación Web.
+Ya que hemos creado y almacenado la información en nuestros JavaBeans, regresamos el control al Servlet y este Servlet controlador 
+puede colocar estos JavaBean en algún alcance para compartir información hacia un JSP. Los alcances pueden ser request, session o 
+application. Los Servlets no conocen el alcance de page, ya que eso pertenece sólo a los JSPs.
+Una vez que el Servlet Controlador ya ha colocado los JavaBeans en algún alcance, hace un redireccionamiento por medio del objeto 
+RequestDispatcher. A su vez, el Servlet Controlador toma la decisión de cual JSP se va a utilizar, por ejemplo podríamos tener un JSP1 un JSP2 un JSP3 etc.
+Finalmente, una vez que ya estamos dentro del JSP seleccionado, lo que va a hacer el JSP es jugar el rol de la Vista, esto implica que 
+únicamente va a mostrar la información que le compartió el Servlet. Los JSP’s en teoría no deberían de crear nuevos objetos Java, para ello 
+toda la información que va a utilizar el JSP ya debió de haber sido proporcionada por el Servlet controlador.
+Una vez que el JSP genera el HTML utilizando la información de los JavaBeans que el Servlets le proporcionó, lo que hace es regresar el 
+contenido al cliente y en este momento es cuando se genera el Render de nuestra aplicación según el Content Type que hayamos 
+utilizado. Por ejemplo, puede ser una salida en HTML, PDF, Video, un archivo de Excel, etc.
+El punto es que el JSP únicamente va a desplegar la información que recibió del Servlet y enviará esta información al cliente. Con esto 
+termina el flujo y si el cliente necesitara de realizar una nueva petición el proceso se repite nuevamente.
+(En el PDF de la lección 239 del curso esta el diagrama donde se visualiza todo esto de manera gráfica).
+
+Pasos generales de un Servlet controlador (este es, a grandes rasgos, el código que utiliza un Servlet controlador):
+Según vimos en la teoría de los Servlets, podemos procesar un parametro utilizando la anotación request.getParameter().
+1-Procesamos y validamos los parámetros (si aplica). request.getParameter("nombreParametro");
+2-Realizamos la lógica de presentación almacenando el resultado en JavaBeans. El resultado de procesar esta
+información la vamos a almacenar en objetos JavaBean. Ej: Rectangulo rec=new Rectangulo();
+3-Antes de seleccionar y redireccionar el JSP que vamos a utilizar, debemos de compartir el objeto que estamos
+creando en algún alcance (scope). request.setAttribute("rectanguloBean", rec); "rectanguloBean" es el nombre que utilizara
+el JSP para recuperar este Bean y rec es el valor que le asignamos a esa llave.
+4-Finalmente seleccionamos el JSP que desplegara la información hacia el cliente.
+RequestDispatcher dispatcher=request.getRequestDispatcher("resultado.jsp"); con esto indicamos cual es el JSP a utilizar.
+dispatcher.forward(request, response); Enviamos la información al JSP. Así le llega la inforamción al JSP.

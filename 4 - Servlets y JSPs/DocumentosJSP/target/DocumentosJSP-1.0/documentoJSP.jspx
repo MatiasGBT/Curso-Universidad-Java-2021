@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+Los documentos jsp tienen la extension .jspx estos documentos no son tan comunes de utilizar/encontrar.
+No se pueden utilizar los comentarios de los jsp, tenemos que usar los de HTML normal.
+-->
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+
+    <!-- Para familiarizarse con lo que trabajamos hasta ahora, usaremos declaraciones, expresiones y Scriblets -->
+    <!--Uso de declaraciones:-->
+    <jsp:declaration>
+        private int contadorVisitas=1;
+    </jsp:declaration>
+    
+    <html>
+        <body>
+            <h1>Ejemplo de un documento JSPx</h1>
+            <!--Ejemplo de salida de texto:-->
+            <jsp:text>Saludos desde un documento JSPx</jsp:text>
+            <br/> <!--XML es más estricto, se debe cerrar el elemento sí o sí-->
+            
+            <!--Uso de expresión:-->
+            <jsp:expression>2*3</jsp:expression>
+            <br/>
+            
+            <!--Uso de Scriplet:-->
+            <jsp:scriptlet>
+                String nombreAplicacion=request.getContextPath();
+            </jsp:scriptlet>
+            
+            Nombre de la aplicación: <jsp:expression>nombreAplicacion</jsp:expression>
+            <br/>
+            Contador de visitas: 
+            <jsp:expression>this.contadorVisitas++</jsp:expression>
+        </body>
+    </html>
+
+</jsp:root>

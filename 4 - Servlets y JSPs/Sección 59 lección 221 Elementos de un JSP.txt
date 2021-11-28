@@ -1,0 +1,49 @@
+Elementos de un JSP:
+Un JSP se compone de expresiones, Scriplets, declaraciones y a su vez poseen una caracteristica en la cual
+vamos a poder manejar una sintaxis equivalente a XML (a este tipo de JSP se lo conoce como JSPX).
+
+-Expressions:
+ - Sintaxis: <%= expresión %> la expresión puede ser un valor como una cadena, una expresión matemática o el resultado
+ de llamar una función (si llamamos a una función, el resultado de esta no puede ser void).
+ - La expresión se evalua y se inserta en la salida del Servlet.
+ - El resultado de utilizar esta expresión es equivalente a utilizar la variable out y el método println.
+
+-Scriplets:
+ - A diferencia de una expresión que unicamente se utiliza para imprimir información a nuestro cliente, un
+ Scriplet puede contener código Java que no necesariamente visualizara el cliente.
+ - Una mala práctica de los Scriblets es escribir mucho código en estos, ya que atenta contra el mantenimiento
+ de los JSP.
+ - Sintaxis: <% codigoJava %>
+ - El código Java se inserta en el método service() del Servlet generado a partir de la compilación del JSP.
+ - Puede ser cualquier código Java válido.
+
+-Declaraciones:
+ - Sintaxis: <%! codigoJava %>
+ - Se utiliza para agregar código a la clase del Servlet generado. A diferencia del scriplet, si declaramos una
+ variable esta se vuelve una variable de instancia debido a que se genera como una variable de la clase del Servlet
+ generado y no como una variable local a cierto método (el método service). Lo mismo pasa con los métodos.
+ - El concepto de declaraciones no es muy utilizado porque normalmente se llamara a funciones o utilizaremos variables
+ definidas dentro de otras clases y no que esten en la clase de nuestro JSP.
+ - Se utilizan para declarar variables o métodos que pertenecen a la clase.
+
+-Sintaxis XML:
+ - Cada elemento JSP tiene su equivalente en sintaxis XML.
+ - Esta sintaxis XML se utiliza paar tener una mayor compatibilidad
+ con el lenguaje XML (por ejemplo con herramientas visuales).
+
+Variables implicitas en los JSPs:
+Dentro de un JSP podremos utilizar objetos ya instanciados para utilizarlos de manera automatica, como por
+ejemplo los objetos request, response, out, session, aplication, entre otros.
+-request:
+ - Es el objeto HTTPServletRequest.
+-response:
+ - Es el objeto HTTPServletResponse.
+-out:
+ - Es equivalente al objeto PrintWriter que utilizamos en los Servlets, sin embargo, es del tipo JspWriter.
+-session:
+ - Es el objeto HttpSession asociado con el objeto request.
+ - Por medio de las directivas podemos deshabilitar el acceso a la sesión en caso de que no queramos que
+ los JSPs manipulen directamente los atributos de una sesión, ya que esto se considera una mala práctica
+ si utilizamos el patrón de diseño MVC.
+-application:
+ - Es un objeto del tipo ServletContext el cual se obtiene a partir del método getServletContext() en un Servlet.
