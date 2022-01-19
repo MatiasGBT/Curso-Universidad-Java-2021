@@ -1,0 +1,29 @@
+Validadores JSF
+Aseguran que los datos de nuestra aplicación sean concistentes según los datos ingresados por el usuario.
+Algunas cuestiones que se pueden validar son rangos de numeros o limites, largo de cadenas, formatos de fechas, etc.
+JSF provee distintos tipos de validaciones, como por ejemplo validaciones estandar,  validaciones en los métodos de los
+Managed Beans y validaciones personalizadas.
+Las validaciones ocurren en el paso 3 del ciclo de vida de JSF, lo que permite que antes de actualizar la información
+del modelo, se tenga la certeza que la información se encuentre con el formato y el tipo de dato deseado.
+
+Maneras de validación en JSF
+- Hay dos maneras:
+ -Validación individual por campo.
+ -Validaciones interdependientes de manera customizada.
+- La validación individual se puede lograr de varias maneras, como por ejemplo agregando un atributo required al tag JSF,
+agregando un atributo validator al tag de la págin JSF, agregando un validador como un tag interno y, como complemento
+al despliegue de errores, se puede utilizar la etiqueta de h:message para mostrar errores en un componente de JSF.
+- La validación interdependiente tiene que ver con la ejecución de código Java dentro de métodos de tipo action. Para
+desplegar errores que no tienen que ver directamente con un componente, sino con errores generales de la página, se
+puede utilizar la etiqueta de h:messages para mostrar varios errores de una sola vez.
+- Al desplegar validaciones el programador es el responsable de desplegar mensajes de error.
+
+Ejemplo de usos de validadores:
+- Ejemplo de un validador estándar:
+<h:inputText id="edadId" required="true" value="#{empleadoBean.edad}">
+	<f:validateLongRange minimum="18" maximum="50"/>
+</h:inputText>
+- Ejemplo validador personalizado:
+<h:inputText id="ipId" required="true" value="#{ipBean.ipValor}">
+	<f:validator validatorId="validatorIp"/> //Este nombre tiene que estar definido en el archivo de faces-config
+</h:inputText>

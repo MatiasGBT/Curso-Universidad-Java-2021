@@ -1,0 +1,27 @@
+Internacionalización en JSF:
+JSF tiene soporte para la especificación I18n de Java, es decir, la especificación de idioma.
+Para definir un idioma debemos de utilizar un archivo de propiedades. Estos archivos permiten especificar nuestras
+etiquetas de las páginas web en varios idiomas.
+
+Resource Bundle en JSF:
+JSF puede cargar estas etiquetas en un archivo de propiedades conocido como Resource Bundle, este se debe configurar
+en el archivo faces-config.
+<application>
+	<resource-bundle>
+		<base-name>mensajes</base-name>
+		<var>msg</var> //esto es lo que se usa en las páginas jsf
+	</resource-bundle>
+</application>
+Ejemplo en una etiqueta outputText:
+<h:outputText value="#{msg['form.usuario']}"/> //Se accede a un valor dentro de otro
+<h:outputText value="#{msg.enviar}" type="submit" action="login"/> //Se accede a un valor
+
+Sobreescritura de mensajes JSF:
+JSF tiene la posibilidad de sobreescribir estos mensajes.
+- Se debe crear un archivo de propiedades (no importa el nombre).
+- Se sobreescriben mensajes del sistema deseados:
+  javax.faces.component.UIInput.REQUIRED=Valor requerido.
+- Para esto se debe configurar en el archivo faces-config:
+  <application>
+  	<message-bundle>jsf</message-bundle>
+  </application>

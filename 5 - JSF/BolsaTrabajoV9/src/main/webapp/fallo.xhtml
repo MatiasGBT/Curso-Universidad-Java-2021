@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Fallo</title>
+    </h:head>
+    <h:body>
+
+        <!-- Aplicamos la plantilla -->
+        <ui:composition template="./WEB-INF/plantillas/plantilla.xhtml">
+
+            <!-- Cambiamos la sección de contenido -->
+            <ui:define name="content">
+
+                <h:form>
+                    Lo siento #{candidato.nombre}, no hay vacantes por el momento
+                    <br/>
+                    <h:commandLink action="index">Regresar</h:commandLink>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

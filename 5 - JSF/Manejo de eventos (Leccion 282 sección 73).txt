@@ -1,0 +1,17 @@
+Value change listener:
+JSF provee dos maneras de detectar cambios (value change) en los componentes, ya sea agregando un atributo
+valueChangeListener al componente o como un elemento interno.
+Los listener en JSF permiten responder a eventos sucedidos en la vista para enlazar el evento al controlador
+y procesar el cambio en el componente.
+Los componentes deben implementar la interface editable value holder.
+Ejemplo:
+<h:inputText id="codigoPostal" onchange="this.form.submit()" value="#{empleadoBean.codigoPostal}"
+valueChangeListener="#{vacanteForm.codigoPostalListener}"/>
+
+//Una vez que el usuario haga algun cambio en el input text, se manda a llamar el método onchange y, automaticamente,
+se manda a llamar el código Java respectivo (codigoPostalListener) asociado con el bean (vacanteForm).
+
+Una vez definido el atributo o elemento interno, se debe agregar el método action en el Managed Bean que escucha
+el cambio en la vista:
+public void codigoPostalListener(ValueChangeEvent valueChangeEvent) {...}
+Este método puede realizar varias cosas, como agregar valores en automatico de Ciudad al agregar el código postal.

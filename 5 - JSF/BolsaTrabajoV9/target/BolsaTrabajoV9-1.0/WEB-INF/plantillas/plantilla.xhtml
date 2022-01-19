@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Proyecto Bolsa Trabajo</title>
+        <!-- Si se encuentra en resources / images reconoce el nombre automaticamente -->
+        <h:outputStylesheet library="css" name="estilos.css"/>
+    </h:head>
+    <h:body>
+
+        <div id="wrapper">
+
+            <!-- Header -->
+            <div id="header-wrapper">
+                <ui:insert name="top"> <!-- ui:insert es una seccion que se puede modificar -->
+                    <div id="header">
+                        <div id="logo">
+                            <h1>Bolsa Trabajo</h1>
+                        </div>
+                    </div>
+                </ui:insert>
+            </div>
+
+            <!-- Contenido -->
+            <div id="page">
+                <ui:insert name="content">
+                    Contenido
+                </ui:insert>
+            </div>
+
+            <!-- Footer -->
+            <div id="footer">
+                <ui:insert name="bottom">
+                    Derechos Reservados - GlobalMentoring.com Universidad Java
+                </ui:insert>
+            </div>
+
+        </div>
+    </h:body>
+</html>

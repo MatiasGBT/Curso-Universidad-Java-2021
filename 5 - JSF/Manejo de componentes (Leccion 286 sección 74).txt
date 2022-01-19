@@ -1,0 +1,118 @@
+Componentes HTML en JSF:
+El API de JSF provee varios componentes básicos para el despliegue de información HTML.
+
+Lista de componentes:
+h:commandButton
+h:commandLink
+h:dataTable
+h:form
+h:graphicImage
+h:inputHidden
+h:inputSecret
+h:inputText
+h:inputTextarea
+h:message
+h:messages
+h:button
+h:link
+h:body
+h:doctype
+h:outputFormat
+h:head
+h:outputLabel
+h:outputLink
+h:outputText
+h:outputScript
+h:outputStylesheet
+h:panelGrid
+h:panelGroup
+h:selectBooleanCheckbox
+h:selectManyCheckbox
+h:selectManyListbox
+h:selectManyMenu
+h:selectOneListbox
+h:selectOneMenu
+h:selectOneRadio
+h:column
+
+Componentes core de JSF:
+El API de JSF provee a su vez para el manejo de eventos, administración de componentes, entre otros.
+Estos componentes no arrojan un resultado HTML si no que tienen que ver directamente con el framework de JSF
+con el ciclo de vida o con validaciones y conversiones que se aplican a los componentes HTML.
+
+Lista:
+f:actionListener
+f:ajax
+f:attribute
+f:converter
+f:convertDateTime
+f:convertNumber
+f:event
+f:facet
+f:loadBundle
+f:metadata
+f:param
+f:phaseListener
+f:selectItem
+f:selectItems
+f:setPropertyActionListener
+f:subview
+f:validateDoubleRange
+f:validateLength
+f:validateLongRange
+f:validateBean
+f:validateRegex
+f:validateRequired
+f:validator
+f:valueChangeListener
+f:verbatim
+f:view
+f:viewParam
+
+Arquitectura de componentes en JSF:
+Los componentes JSF son más que simples etiquetas HTML.
+Un componente se compone en 3 partes:
+ - 1: La etiqueta misma de JSF.
+ - 2: Despliegue del componente (Código que visualiza el cliente, es decir, HTML).
+ - 3: Componente Java UI: Es una clase de Java que representa el componente de la página JSF pero desde el punto
+      de vista de código Java.
+
+Component Tree en JSF:
+El flujo comienza con nuestro cliente (navegador), el cual recibe código HTML generado por el servidor Java.
+Cuando el cliente hace una petición al servidor, el Component Tree se sincroniza nuevamente, es decir, el código
+de las etiquetas JSF son convertidos o actualizados a su componente JSF UI respectivo. Por ejemplo, un componente
+h:inputText se convierte en un componente UI inputText, el cual puede ser manipulado directamente desde algun Managed
+Bean. Finalmente la etiqueta genera elementos Java, los cuales se agregan al Component Tree.
+Una vez terminado el ciclo de vida de JSF, se envía nuevamente la respuesta al cliente, generando la respuestta HTML.
+El Component Tree tiene una duración de vida muy corta, normalmente, durante el envío o respuesta de la petición, es decir,
+request/response.
+
+Componentes de selección en JSF:
+El API de JSF provee distintos tipos de componentes de selección, por ejemplo:
+ - <h:selectOneListbox/> podemos seleccionar un elemento de una lista.
+ - <h:selectMenu/> podemos seleccionar un elemento de una lista, pero esta tiene solo 1 elemento que se muestra.
+ - <h:selectOneListbox/> podemos seleccionar varios elementos de una lista.
+ - <h:selectMenu/> podemos seleccionar varios elementos de una lista, pero esta tiene solo 1 elemento que se muestra.
+ - <h:selectOneRadio/> podemos seleccionar un radio button.
+ - <h:selectBooleanCheckbox/> permite seleccionar un checkbox en HTML (por ejemplo, recordar credenciales).
+ - <h:selectManyCheckbox/> permite seleccionar varios checkbox.
+
+Select items en JSF:
+Los componentes JSF tales como selectOneMenu muestran una lista de datos, los cuales se conocen como Select Items
+(elementos de selección).
+La lista de elementos SelectItems ligada a una propiedad de ManagedBean es utilizada dentro de un componente JSF.
+<h:selectOneMenu>
+	<f:selectItems value="#{coloniaHelper.coloniaSelectItems}"/>
+	//coloniaSelectItems es un atributo del ManagedBean coloniaHelper del tipo SelectItems
+</h:selectOneMenu>
+Lista de elementos de código duro en página JSF:
+<h:selectOneMenu>
+	<f:selectItems>
+		<f:selectItem itemLabel="Rojo" itemValue="rojo"/>
+		<f:selectItem itemLabel="Verde" itemValue="verde"/>
+		<f:selectItem itemLabel="Azul" itemValue="azul"/>
+	<f:selectItems/>
+</h:selectOneMenu>
+
+Documentación oficial:
+https://docs.oracle.com/javaee/6/javaserverfaces/2.1/docs/vdldocs/facelets/

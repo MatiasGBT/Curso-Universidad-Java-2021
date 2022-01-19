@@ -1,0 +1,8 @@
+ExplicacionNavegacion.class
+beans\backing\VacanteForm.class
+beans\configuracion\ConfigurationJSF.class
+Explicacion.class
+beans\model\Candidato.class
+beans\lifecycle\DebuggerListener.class
+ExplicacionManagedBeans.class
+ExplicacionCicloVida.class

@@ -1,0 +1,41 @@
+Características de Facelets:
+- Es la tecnología estándar de despliegue de un JSF.
+- Los facelets eliminan por completo la necesidad de utilizar JSPs.
+- Los facelets utilizan un parses XML en lugar del compilador de JSP.
+- Comparado con los JSP, los Facelets crean un Component Tree más ligero.
+- Los facelets resultan hasta 30% más rápidos en comparación con los JSP.
+- Poseen soporte para templates.
+- La creación de componentes compuestos es más simple al utilizar este tipo de tecnología.
+- Tienen una sintaxis similar a los JSP.
+
+Los Faceclets no son JSP:
+- Dentro de una página Faceclet no es posible utilizar los siguientes taglib de JSP:
+ - <jsp:root/>
+ - <jsp:directive.include/> //No se pueden utilizar directivas.
+ - <jsp:output/>
+ - <jsp:directive.content/>
+- Sin embargo, sí es posible utilizar los tags de JSTL, como los siguientes:
+ - <c:forEach/>
+ - <c:if/>
+ - <c:catch/>
+ - etc.
+
+Plantillas con Facelets:
+Las plantillas definen regiones lógicas de una página JSF.
+Los elementos generales son:
+ - Template (plantilla): Página utilizada para controlar el layout (disposición de elementos).
+ - Template-client (Cliente de plantilla): Página que personaliza su propia distribución (layout) a partir de la plantilla
+   que implementa.
+Los usuarios finales siempre accederan al Template-client, NUNCA directamente a la plantilla.
+
+Componentes compuestos:
+- La creación de componentes en JSF requería de crear clases Java los cuales requerian elementos y archivos de configuración
+  para que pudieran funcionar en las páginas JSF.
+- Los Facelets permiten crear componentes reutilizables convinando HTML, CSS, JavaScript y tags de JSF, lo que permite
+  la reutilización de otros componentes.
+  - Los componentes creados se definen en un archivo XHTML, no en clases Java.
+- Los componentes compuestos son básicamente plantillas asociadas a un tag library personalizado.
+- Para referenciar a un nuevo componente basta con importar el namespace en el XHTML.
+
+Nota sobre BolsaTrabajoV9: Es importante mantener el mismo nombre de las carpetas nuevas creadas (resources, css y images)
+porque así las reconoce el servidor web.
