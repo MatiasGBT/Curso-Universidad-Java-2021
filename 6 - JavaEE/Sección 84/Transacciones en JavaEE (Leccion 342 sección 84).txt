@@ -1,0 +1,53 @@
+¿Qué es una transacción?
+Una transacción se conoce como una unidad de trabajo atómica, es decir, se realiza todo o nada del método transaccional.
+
+En la figura (ver PDF sección 84) podemos observar un método de servicio que ejecuta llamadas a más de un DAO,
+y a su vez cada DAO modifica el estado de la base de datos al escribir y/o modificar su información.
+El objetivo de una transacción es ejecutar todas las líneas de código de nuestro método y guardar finalmente la
+información en un repositorio, por ejemplo en nuestro caso, una base de datos. Esto se conoce como commit de nuestra
+transacción.
+Si por alguna razón algo fallara en nuestro método de Servicio, se daría marcha atrás a los cambios realizados en
+la base de datos. Esto se conoce como rollback.
+Lo anterior permite que nuestra información, ya sea que se una única base de datos o no, esté íntegra, y no exista 
+posibilidad de datos corruptos por errores o fallas en la ejecución de nuestros métodos Java.
+
+Por ejemplo, imaginemos un sistema de venta de boletos de avión por internet. En este caso, los pasos necesarios para 
+reservar un boleto son:
+1) Verificar boletos disponibles
+2) Reservar un boleto
+3) Realizar el pago
+4) Recibir los datos del boleto
+Si por alguna razón alguno de los pasos falla, entonces el boleto no se debe considerar como un boleto vendido, sino como 
+un boleto disponible. En caso de que todo se haya realizado exitosamente, entonces el boleto ya no está disponible y se 
+actualiza el estado de la base de datos para reflejar un boleto menos para los nuevos usuarios interesados en comprar un 
+boleto de avión.
+Así que los métodos que hagamos partícipes de una transacción se ejecutarán como una sola acción, lo que garantiza que 
+se ejecutan por completo, o si fallan, no se persista ninguna de la información. Los EJB al ejecutarse en un contenedor
+Java empresarial, por default son transaccionales, por lo tanto, cualquier método de un EJB maneja este concepto en 
+automático.
+
+Características de una transacción:
+Las características de una transacción tienen el acrónimo ACID:
+- Atomic: Las actividades de un método se consideran como una unidad de trabajo. Esto se conoce como 
+  Atomicidad. Este concepto asegura que todas las operaciones en una transacción se ejecuta todo o nada.
+  Si todas las instrucciones o líneas de código de un método transaccional son ejecutadas con éxito, entonces al
+  finalizar se realiza un commit, es decir, guardado de la información. 
+  Si alguna de las instrucciones falla se realiza un rollback, es decir, ninguna de la información es guardada en la base 
+  de datos o el repositorio donde ser persiste dicha información.
+- Consistent: Una vez que termina una transacción (sin importar si ha sido exitosa o no) la información queda en 
+  estado consistente, ya que se realizó todo o nada, y por lo tanto los datos no deben estar corruptos en ningún 
+  aspecto.
+- Isolated (aislado): Múltiples usuarios pueden utilizar los métodos transaccionales, sin afectar el acceso de
+  otros usuarios. Sin embargo debemos prevenir errores por accesos múltiples, aislando en la medida de lo posible
+  nuestros métodos transaccionales.
+  El aislamiento normalmente involucra el bloqueo de registros o tablas de base de datos, esto se 
+  conoce como locking.
+- Durable: Sin importar si hay una caída del servidor, una transacción exitosa debe guardarse y perdurar posterior al 
+  termino de una transacción.
+
+En nuestro ejemplo de la compra de boletos, una transacción puede asegurar la atomicidad debido a que puede 
+deshacer todos los cambios realizados si alguno de los pasos falla. También se aplicaría la consistencia de datos al 
+asegurar que no se deja nada de manera parcial, ejecutando todo o nada. El aislamiento prevé que otro usuario 
+tome el boleto reservado mientras todavía no termina la transacción. Y finalmente al momento de hacer commit o 
+rollback de la transacción la información es almacenada sin inconsistencias, permitiendo que sea durable incluso 
+posterior a la finalización de la transacción.

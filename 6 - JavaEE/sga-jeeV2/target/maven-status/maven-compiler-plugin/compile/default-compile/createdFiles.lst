@@ -1,0 +1,4 @@
+sga\cliente\PruebaManejoTransacciones.class
+sga\servicio\PersonaServiceRemote.class
+sga\domain\Usuario.class
+sga\domain\Persona.class

@@ -1,0 +1,39 @@
+Seguridad en JavaEE:
+Uno de los temas cruciales al momento de desarrollar aplicaciones empresariales Java es el tema de seguridad.
+Ya sea que nuestra aplicación sea consultada a través de una interface Web utilizando Servlets o JSF, que 
+expongamos la funcionalidad utilizando Web Services SOAP o REST, o que directamente un Cliente Swing tenga 
+acceso a nuestros EJB, es necesario establecer los mecanismos que garanticen la seguridad de la información del 
+sistema.
+La seguridad se debe asegurar desde el punto de vista de la vista y la capa de negocio, debido a que un usuario 
+que no pueda visualizar una página, no significa que no pueda ejecutar un método de la capa de negocio.
+Uno de los beneficios de utilizar EJB, es la simplicidad y flexibilidad para agregar seguridad en la ejecución de sus 
+métodos. Similar al manejo de transacciones, el manejo de Seguridad contamos con la Seguridad Declarativa y la 
+Seguridad Programática.
+Dos conceptos básicos respecto a la seguridad de un sistema son Autenticación y Autorización:
+- Autenticación: La autenticación es el proceso de verificar la identidad del usuario. Lo más común es 
+  identificarnos ante el sistema por medio de un usuario y contraseña. A estos datos se les conoce como 
+  credenciales. Formas más avanzadas de autenticación es por medio de autenticación biométrica, tales como: 
+  huellas dactilares, patrones de Iris y retina, detección de rasgos físicos como el rostro, etc.
+  La autenticación se debe ejecutar antes de la autorización.
+- Autorización: Una vez que el usuario se ha autenticado en el sistema, el siguiente paso es verificar los permisos 
+  del usuario a ejecutar cierta funcionalidad del sistema. De tal manera, que sin importar que un usuario se haya 
+  autenticado correctamente, no necesariamente tendrá la autorización para ejecutar la funcionalidad deseada en 
+  el sistema. Estos dos conceptos está ligados al manejo de usuarios, grupos y roles.
+
+Usuarios, grupos y roles:
+Los Usuarios, Grupos y Roles son 3 conceptos interrelacionados que conforman la base del esquema de 
+seguridad en un sistema empresarial.
+Para simplificar la administración los usuarios son divididos por grupos. Los grupos son una partición lógica para la 
+identificación de usuarios, los cuales pueden tener acceso a distintos recursos. Por ejemplo, una aplicación puede 
+tener un grupo de "Administradores" compuesto de usuarios con permisos de eliminación de registros.
+Antes de ejecutarse cualquier operación en el sistema, la aplicación revisa si el usuario es un miembro del grupo y 
+permite o deniega la ejecución del método/recurso solicitado. El manejo de grupos permite asignar las funciones 
+comunes de los usuarios a una sola entidad, y de esta manera facilitar la administración de cada individuo.
+Un rol permite relacionar los grupos de una organización en entidades que entienda y procese correctamente la aplicación.
+De esta manera, los roles son una abstracción de los grupos enfocados en el servidor de aplicaciones Java. Un 
+mapeo entre los roles y los grupos es comúnmente realizado. Si los nombres de los grupos y los roles son 
+equivalentes, la mayoría de los servidores de aplicaciones pueden realizar el mapeo de manera automática, de lo 
+contrario se debe configurar el servidor para realizar esta tarea.
+En caso que los nombres de los grupos y roles no coincidan, se debe especificar el mapeo de roles-grupos al 
+servidor Java. Esto se puede hacer por medio de configuración del mismo servidor o por medio de archivos de 
+configuración. Por ejemplo, en el caso de GlassFish se debe agregar el archivo glassfish-web.xml.

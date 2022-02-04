@@ -1,0 +1,23 @@
+Recuperar un objeto en JPA:
+1. Iniciamos una nueva transacción,
+2. Ejecutamos SQL (con el método find() o  merge()) para encontrar el objeto a recuperar.
+3. Una vez recuperado, se pasa al estado Persistente y se cierra la transacción.
+Una vez cerrada la transacción se pasa al estado de Detached.
+
+Ejemplo código:
+@Test
+public void testEncontrarObjeto() {
+
+	//Paso 1. Inicia transacción
+	EntityTransaction tx = em.getTransaction();
+	tx.begin();
+
+	//Paso 2. Ejecuta SQL de tipo select
+	Persona persona1 = em.find(Persona.class, 23);
+
+	//Paso 3. Termina transacción
+	tx.commit();
+
+	//Objeto en estado detached
+	log.debug("Objeto recuperado:" + persona1); //Ya se puede trabajar con este objeto
+}

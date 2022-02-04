@@ -1,0 +1,16 @@
+¿Qué es un Enterprise JavaBean (EJB´S)?
+Un EJB es una clase Java con características que lo hacen mucho más potente y robusto:
+ - Los métodos de un EJB son transaccionales.
+ - Los métodos pueden ser remotos.
+ - Tienen facilidad de comunicación con las bases de datos.
+ - Los métodos pueden ser seguros.
+El equipo del cliente se comunica con los EJB´s del servidor de aplicaciones vía protocolo RMI (Remove Method Invocation),
+el cual es parte del estándar Java SE.
+Los EJB´s son código Java del lado del servidor y, normalmente, tienen la lógica de negocio de nuestra aplicación, por lo
+que cumplen el rol de nuestra capa de servicio de nuestras aplicaciones Java.
+Los EJB´s pueden ser programados una vez y ejecutados en cualquier servidor de aplicaciones Java que soporte el estandar
+JavaEE.
+Los EJB´s brindan beneficios tales como seguridad, transaccionalidad, multithreading, etc, todo con ayuda de un
+servidor de aplicaicones Java.
+A diferencia de un Java Bean, que es una clase pura de Java, un EJB es una clase Java con características que lo
+hacen mucho más potente y robusto.

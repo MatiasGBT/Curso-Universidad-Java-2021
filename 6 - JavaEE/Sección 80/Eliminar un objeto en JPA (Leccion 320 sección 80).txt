@@ -1,0 +1,43 @@
+Eliminar un objeto persistente en JPA:
+Similar al actualizar, se requieren 2 transacciones. La primera para recuperar el objeto y la segunda para removerlo.
+1. Inicia la transacción 1.
+2. Ejecutamos SQL (método find()). El objeto pasa al estado Persistente.
+3. Se hace un flush y un commit y se cierra la transacción 1. El objeto pasa al estado de Detached.
+4. Habiendo ya recuperado el objeto entidad, inicia la transacción 2.
+5. Ejecuta SQL (método remove()), lo que pasa el objeto al estado de Removed.
+6. Se cierra la transacción y el objeto pasa al estado de Transitivo, ya que no tiene representación en la BD.
+
+Ejemplo en código:
+@Test
+public void testEliminarObjeto() {
+	// Paso 1. Inicia transacción 1
+	EntityTransaction tx1 = em.getTransaction();
+	tx1.begin();
+
+	// Paso 2. Ejecuta SQL de tipo select
+	Persona persona1 = em.find(Persona.class, 23);
+
+	// Paso 3. Termina transacción 1
+	tx1.commit();
+
+	// Objeto en estado detached
+	log.debug("Objeto recuperado:" + persona1);
+
+	// Paso 4. Incia transacción 2
+	EntityTransaction tx2 = em.getTransaction();
+	tx2.begin();
+
+	// Paso 5. Ejecuta SQL (es un delete)
+	em.remove(persona1);
+
+	// Paso 6. Termina transacción 2
+	// Al momento de hacer commit se realiza el delete
+	tx2.commit();
+
+	// Objeto en estado transitivo ya modificado
+	//Ya no es posible resincronizarlo en otra transacción
+	//Solo está en memoria, pero al terminar el método se eliminará
+	log.debug("Objeto eliminado:" + persona1);
+}
+
+Similar a actualizar, también se puede utilizar una session larga, ahorrando una transacción.

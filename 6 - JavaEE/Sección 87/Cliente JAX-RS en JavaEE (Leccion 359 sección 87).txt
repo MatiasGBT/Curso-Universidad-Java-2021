@@ -1,0 +1,37 @@
+Descripción de REST Web Service:
+Cuando creamos Soap Web Services, el documento WSDL era el elemento central para describir el Web Service a utilizar.
+De manera similar, con RESTful Web Services tenemos un documento conocido como WADL (WebService Application Description
+Language), el cual permite describir los RESTful Web Services de manera muy similar a un documento WSDL.
+Permite autodocumentar el servicio web así como el XSD asociado a dicho Web Service.
+Esto tiene varias ventajas, por ejemplo, existe una herramienta para generar el código del lado del 
+cliente utilizando el comando: jar wadl2java.jar
+Como parte de la autodocumentación del Servicio Web, en el documento WADL se especifica el 
+documento XSD que valida el documento XML a transmitir.
+Como podemos observar en la figura (ver PDF sección 87 página 11), debido a que se está transmitiendo entidades
+de tipo Persona, es necesario validar que la información XML a transmitir sea válida conforme a este documento XSD.
+
+Cliente REST Web Service:
+La ventaja de un servicio REST es que las peticiones GET el navegador WEB las soporta por default, así que al colocar la URL 
+del recurso REST a buscar, obtendremos en automático la respuesta respectiva. Por ejemplo al colocar la siguiente URI y 
+estar levantado el servidor de GlassFish o el Servicio Web ya publicado, obtendremos la respuesta siguiente:
+Utilización de la URI:
+http://localhost:8080/sistema-sga/webservice/personas/1
+Respuesta:
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<persona>
+	<idPersona>1</idPersona>
+	<apellido>Perez</apellido>
+	<email>jperez@mail.com</email>
+	<nombre>Juan</nombre>
+	<telefono>56677889</telefono>
+</persona>
+
+Para crear un cliente Java, el proyecto http://jersey.java.net/ proporciona varias clases para hacer muy simple el
+consumo de REST Web Services. En el siguiente código se puede observar un ejemplo para consultar
+la persona con el idPersona = 1.
+public static void main(String[] args) {
+	Client client = Client.create();
+	WebResource webResource = client.resource("http://localhost:8080/sistema-sga/webservice/personas/1");
+	Persona persona = web.get(Persona.class);
+	System.ou.println("La persona es: " + persona.getNombre() + " " + persona.getApellido());
+}

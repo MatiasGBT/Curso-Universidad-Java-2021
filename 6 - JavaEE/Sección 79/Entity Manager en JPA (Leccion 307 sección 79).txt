@@ -1,0 +1,97 @@
+API de JPA y Entity Manager:
+Para que una clase de Entidad pueda ser persistida, se debe realizar una llamada al API de JPA. De hecho 
+muchas de las operaciones se realizan a través de esta API, la cual está separada de nuestras clases de Entidad.
+
+En la figura (PDF de la sección 79) podemos observar el API JPA, la cual tiene como elemento principal al objeto
+EntityManager, siendo este una interfaz. Una implementación de esta interfaz es la que realmente ejecuta el trabajo
+de persistencia, sincronización con la base de datos, transaccionalidad, validación de mapeo,
+conversión de código Java a SQL, entre muchas otras tareas.
+
+Por lo tanto, una clase Entity, desde el punto de vista descrito anteriormente, es tan solo una clase Java normal, 
+la cual al vincularse con un EntityManager, se persiste en la base de datos.
+
+El objeto EntityManager se obtiene de una fábrica de objetos conocida como EntityManagerFactory, y este 
+objeto se asocia con un proveedor JPA, pudiendo haber seleccionado entre varios proveedores según la 
+implementación de JPA escogida (Hibernate, EclipseLink, OpenJPA, etc).
+
+El objeto Persistance Unit, se encarga de realizar la configuración del proveedor seleccionado por medio de un 
+archivo xml llamado persistance.xml, además de definir otros elementos tales como: la forma de comunicarse con
+la Base de Datos, las clase de Entidad en la aplicación, si se va a utilizar JTA para el manejo transaccional, etc.
+
+A su vez, al conjunto de objetos Entity administrados por JPA en un tiempo específico de la aplicación se le 
+conoce como PersisteceContext, de esta manera JPA se asegura que no existan objetos de Entidad duplicados 
+en memoria, entre otras tareas más.
+
+Ejemplo de cómo utilizar el API JPA para persistir un objeto de Entidad:
+EntityManagerFactory emf = Persistence.createEntityManagerFactory(“PersonaService");
+EntityManager em = emf.createEntityManager();
+Persona persona = new Persona(15);
+em.persist( persona );
+
+Configuración de unidad de persistencia (ejemplo gráfico en el PDF de la sección 79):
+- Para realizar la configuración de la Unidad de Persistencia se debe utilizar un archivo xml llamado persitence.xml.
+- El nombre del elemento persistence-unit indica el nombre de la unidad de persistencia, y es muy importante recordarlo,
+  ya que es el nombre que utilizaremos en nuestro código Java al momento de utilizar el objeto EntityManagerFactory.
+- El atributo transaction-type especifica el tipo de transaccionalidad que se utilizará, pudiendo seleccionar
+  JTA como el proveedor o una conexión de manera local (RESOURCE_LOCAL).
+- Se pueden especificar también las clases de Entidad del sistema, pudiendo definir varias clases.
+  Si la aplicación se despliega en un servidor Java, no es necesario declarar estas clases, sin embargo,
+  para aplicaciones Java SE (Standard Edition) es necesario especificar las clases de Entidad del sistema.
+- La sección de propiedades especifica características del proveedor a utilizar, así 
+  como los datos de conexión a la base de datos si hablamos de un recurso local, puesto que si estamos utilizando
+  JTA, los datos de conexión a la Base de Datos estarán en el servidor de aplicaciones y no en el archivo persistance.xml.
+- Al momento de empaquetar una aplicación Java, el archivo persistence.xml se debe 
+  ubicar en la carpate META-INF/persistence.xml del archivo .jar.
+
+Utilizando la unidad de persistencia:
+Ejemplo de código:
+@Stateless
+public class PersonaServiceBean implements PersonaService {
+
+	@PersistenceContext(unitName="PersonaService") //Si solo tenemos una unidad de persistencia no es necesario el nombre.
+	EntityManager em; //Con la anotación inyectamos una referencia del EntityManager
+
+	public void agregarPersona(Persona persona) {
+		em.persist(persona);
+	}
+
+	public Persona encontrarPersona(int idPersona) {
+		return em.find(Persona.class, idPersona);
+	}
+
+	public Persona modificarNombrePersona(int idPersona, String nuevoNombre) {
+		Persona persona = em.find(Persona.class, idPersona);
+		if(persona!=null) {
+			persona.setNombre(nuevoNombre);
+		}
+		return persona;
+	}
+
+	public void eliminarPersona(int idPersona) {
+		Employee emp = em.find(Employee.class, idPersona);
+		em.remove(emp);
+	}
+}
+
+En el código de arriba podemos observar un ejemplo de un código donde hacemos uso de la unidad de persistencia 
+para obtener el objeto EntityManager. Una vez que ya hemos obtenido una referencia al objeto EntityManager,
+podemos comenzar a realizar las operaciones con los objetos de Entidad.
+
+Por ejemplo, se pueden realizar tareas tales como:
+- Inserción: Para persistir una entidad se utiliza el método persist del EntityManager. Con este 
+  método podemos generar un registro en la base de datos. Este registro no será guardado hasta haber 
+  concluido la transacción (commit). Recordemos que los métodos de un Session Bean son 
+  transaccionales por default, esto implica que al terminar de ejecutar el método agregarPersona y al 
+  ejecutarse en un contenedor empresarial Java, en automático se realizará el commit. En lecciones 
+  posteriores revisaremos el tema de transacciones dentro y fuera de un servidor de aplicaciones.
+- Búsqueda: Una vez que tenemos un objeto persistido, podemos recuperar la información del registro 
+  de la base de datos utilizando el método find del objeto EntityManager, y basta con especificar el tipo 
+  (clase) y el id (llave primaria) que estamos buscando.
+- Modificación: La modificación cambia un poco, debido a que JPA necesita primero saber con qué 
+  entidad se está trabajando, por ello necesitamos recuperar el objeto de entidad. Una vez recuperado, 
+  realizamos las modificaciones necesarias, y si el objeto se encuentra en una transacción activa, JPA 
+  revisará en automático si es necesario realizar alguna actualización sobre el registro. Lo interesante es 
+  que no es necesario volver a llamar al método persist, esta llamada es opcional.
+- Eliminación: Similar a la modificación, primero se debe recuperar la entidad con el método find, y una 
+  vez en memoria, llamamos el método remove.
+Estas son las operaciones básicas utilizando el objeto EntityManager sobre nustros objetos de entidad.

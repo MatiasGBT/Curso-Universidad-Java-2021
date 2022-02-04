@@ -1,0 +1,56 @@
+Ciclo de vida en JPA:
+El API de JPA simplifica en gran medida la forma en que interactuamos con una base de datos. JPA agrega un 
+ciclo de vida para la administración de los objetos de entidad. Estados del ciclo de vida:
+
+Cuando se crea un objeto este pasa al estado Transitivo (Transient):
+- Los objetos de entidad nuevos NO son guardados directamente en la Base de Datos (BD).
+- No están asociados con un registro de BD.
+- Se consideran NO transaccionales.
+
+Cuando se utiliza en método persist, el objeto pasa al estado Persistente (Managed):
+- Un objeto persistente tiene asociado un registro en la BD.
+- Los objetos persistentes siempre están asociados con una transacción. Su estado se sincroniza con la BD 
+  al terminar la transacción.
+
+Cuando se realiza un commit o un rollback y se cierra la transacción, el objeto pasa al estado Separado (Detached):
+- Estos objetos tienen asociado un registro de BD, pero su estado no está sincronizado con la esta.
+- Todos los objetos recuperados en una transacción se convierten en detached una vez que termina la misma.
+- Los objetos en este estado pueden volver al estado de persistido con el método merge().
+
+Si se utiliza el método remove en un objeto en estado Persistente, este pasa al estado Eliminado (Removed):
+- Estos objetos ya no tiene una representación con la BD y al terminar la transacción, el registro asociado es eliminado.
+
+Como se puede ver en el gráfico del PDF de la sección 80, un objeto Persistido puede hacer rollback y volver al
+estado Transitivo, a su vez, un objeto en estado Eliminado puede hacer lo mismo y volver a estado Transitivo.
+Un objeto en estado Persistido puede utilizar el método refresh para estar en sintonía con la BD.
+Existen además anotaciones para complementar cualquier acción deseada entre los estados mostrados, tales 
+como @PrePersist y @PostPersist , las cuales se utilizan al persistir un objeto, @PreRemove y @PostRemove al 
+eliminar un objeto, @PreUpdate y @PostUpdate al actualizar un objeto, así como @PostLoad al hacer refresh.
+
+Persistir un objeto en JPA:
+Para persistir un objeto partimos de un nuevo objeto de entidad, el cual esta en estado Transitivo (1°). Posteriormente,
+iniciamos una transacción, por lo que ya estamos dentro de un contexto persistente (2°).
+Se ejecuta el SQL por medio del método persist() (3°) y en este momento se pasa al estado Persistente.
+Luego, se llama al método flush, ejecutando un commit o un rollback. Esto se puede hacer en automático (4°).
+Finalmente termina la transacción y se pasa al estado de Detached (5°).
+
+Ejemplo en código:
+@Test
+public void testPersistirObjeto() {
+	//Paso 1. Crea nuevo objeto
+	//Objeto en estado transitivo
+	Persona persona1 = new Persona("Pedro","Luna",null,"pluna@mail.com","19292943");
+
+	//Paso 2. Inicia transacción
+	EntityTransaction tx = em.getTransaction();
+	tx.begin();
+
+	//Paso 3. Ejecuta SQL
+	em.persist(persona1);
+
+	//Paso 4. Commit/rollback
+	tx.commit();
+
+	//Objeto en estado detached
+	log.debug("Objeto persistido:" + persona1);
+}

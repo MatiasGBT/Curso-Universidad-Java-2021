@@ -1,0 +1,83 @@
+AJAX en JSF:
+AJAX no es una tecnología, sino un conjunto de tecnologías que permiten mejorar la usabilidad de nuestras
+aplicaciones Web. AJAX es el acrónimo de Asynchronous JavaScript and XML.
+
+Una aplicación Web clásica utiliza una interacción cliente servidor de manera síncrona, esto significa que
+ante cada acción del usuario, es necesario esperar a que el servidor Web termine de procesar dicha
+petición y hasta entonces es que podremos observar la respuesta HTML por parte del servidor.
+
+AJAX nos permite mejorar este comportamiento, agregando el concepto de peticiones asíncronas. Esto 
+significa que ante una petición del usuario, no es necesario esperar a que el servidor termine de procesar 
+dicha petición para seguir trabajando. Por otro lado, el servidor al recibir la petición, la procesa y al 
+terminar regresa una respuesta al cliente, sin embargo nunca se detuvo la página Web durante este 
+proceso y el cliente pudo realizar otras tareas.
+
+Un ejemplo común de procesamiento AJAX es al crear un correo electrónico en gmail. Por un lado 
+podemos adjuntar un archivo (petición asíncrona) y por otro lado podemos seguir redactando nuestro 
+email. En el momento en que se concluya el proceso de adjuntar el archivo podremos completar el envío 
+del email.
+
+Otra de las ventajas de utilizar AJAX es que obtenemos refresh parciales, debido a que podemos actualizar 
+únicamente los elementos de la página Web que nos interesa.
+
+Extensiones en JSF:
+El número de componentes y funcionalidad que viene por default en JSF es limitado. Sin embargo 
+crear nuevos componentes y agregar nueva funcionalidad es uno de los éxitos de esta tecnología.
+Por ello, muchas empresas han creado proyectos para extender la funcionalidad y agregar nuevos 
+componentes, además de los que ya tenemos disponibles por default.
+Las extensiones más populares al día de hoy para agregar nuevos componentes a nuestras 
+páginas JSF son:
+- PrimeFaces.
+- ICEfaces.
+- RichFaces.
+- OpenFaces.
+- Etc.
+En el proyecto de integración de tecnologías empresariales utilizaremos la extensión de 
+PrimeFaces, por varias razones que comentaremos más adelante.
+
+Características de PrimeFaces:
+- OpenSource y con una comunidad en constante crecimiento.
+- Manejo de más de 100 componentes (Editor HTML, gráficos, etc).
+- Soporte para AJAX basado en el API de AJAX de JSF.
+- Soporte de HTML5, CSS4 y JQuey. A día de hoy también soporta Angular, React y Vue.
+- Es ligero, solo un jar, sin configuraciones extras y sin dependencias.
+- Soporte de Ajax Push vía websockets.
+- RenderKit de Interface para dispositivos móviles basados en web.
+- Manejo de plantillas libres o de paga.
+- Basta documentación.
+PrimeFaces es una de las extensiones más populares al día de hoy, y tiene un excelente performance, permitiendo
+configurar y utilizar los nuevos componentes de manera muy simple.
+Para configurar PrimeFaces basta con descargar la librería y agregarla al classpath de nuestro proyecto.
+Y para comenzar a utilizar los componentes, solo agregamos el namespace a nuestra página xhtml, como sigue:
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      … 
+	<h:body>
+		<p:editor />
+	</h:body>
+</html>
+
+Integracíon entre JSF y EJB:
+@ManagedBean
+public class PersonaBean {
+	@EJB //A día de hoy es recomendable usar @Inject
+	private PersonaService personaService;
+
+	List<Persona> personas;
+
+	public PersonaBean() {
+	}
+
+	@PostConstruct
+	public void inicializar() {
+		personas = personaService.listarPersonas();
+	}
+	//...
+}
+Como podemos observar en el código, integrar un EJB para ser utilizado en un 
+ManagedBean de JSF es tan simple como utilizar la anotación @EJB y especificar el tipo del EJB a 
+utilizar. 
+Esto provocará que en automático el servidor de aplicaciones busque una instancia del tipo de EJB 
+especificado, y una vez localizado se realiza una inyección de esta dependencia de manera 
+automática por parte del servidor de aplicaciones Java.

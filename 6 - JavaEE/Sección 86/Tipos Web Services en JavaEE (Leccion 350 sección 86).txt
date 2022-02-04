@@ -1,0 +1,44 @@
+Tipos de Web Services:
+En JavaEE, Jax-WS y Jax-RS son los estándares para crear Web Services:
+- JAX-WS: Java API for XML Web Services permite definir Web Services también conocidos como
+  SOAP Web Services. JAX-WS reemplaza el uso de JAX-RPC. La creación de Web Services utilizando
+  JAX-RPC (Remote Procedure Call) fue el estándar en la versión 1.4.
+- JAX-RS: Java API for RESTful Web Services permite crear Web Services de acuerdo a la 
+  terminología Representational State Transfer (REST) bajo el protocolo HTTP. JAX-RS no es el 
+  estándar, pero ha ganado gran popularidad en los últimos años.
+
+Cuando utilizamos Java EE, debemos decidir si utilizamos el API de JAX-WS o JAX-RS. Para tomar este
+decisión podemos tomar en cuenta los siguientes puntos:
+- JAX-WS: Esta API permite abordar requerimientos más complejos y lleva más años en el mercado. 
+  Brinda soporte para los protocolos que son estándar en la industria de software al crear Web 
+  Services. Estos estándares proveen una manera muy robusta para agregar seguridad, transaccionalidad, interoperabilidad,
+  entre varias características entre el cliente y el servidor al utilizar Web Services.
+- JAX-RS: Esta API permite crear de manera más simple Web Services, solo que está restringido por el 
+  estilo REST, el cual utiliza el protocolo HTTP y sus métodos soportados y códigos de estado para 
+  establecer las operaciones básicas de un Servicio Web (GET, POST, PUT, DELETE, etc).
+
+SOAP Web Services:
+En términos simples un Web Service es una plataforma estándar que provee interoperabilidad entre 
+distintas aplicaciones. Para la mayoría de los programadores esto significa envío y recepción de 
+mensajes XML los cuales son transmitidos vía HTTP/HTTPS.
+Tanto el lenguaje XML como el protocolo HTTP son un estándar y son ampliamente aceptados para el 
+envío y recepción de información, así, esta información puede ser procesada por múltiples clientes con 
+distintas tecnologías.
+Como se observa en la figura (ver PDF sección 86), un Web Services se publica en un tipo directorio conocido como UDDI, el 
+cual significa Universal Description, Discovery and Integration. UDDI es un estándar y tiene como
+objetivo publicar y permitir el acceso a los Web Services a través de mensajes SOAP.
+SOAP (Simple Object Access Protocol) es un protocolo estándar el cual define la forma en que se 
+intercambia datos de tipo XML.
+WSDL (Web Services Description Language) nos permite describir los Web Services. WSDL describe la 
+interface pública de nuestros Web Services y se utiliza XML para su descripción. Este descriptor lo 
+analizaremos posteriormente.
+Una vez que ya conocemos la ubicación del Web Services a través del WSDL (URI) del mismo, podemos 
+enviar la petición SOAP y así ejecutar el método expuesto del Web Service. En este procedimiento el 
+XML de petición y respuesta suele validarse utilizando XSD (schema).
+Una vez llegado el mensaje XML al servidor Java, este debe convertirse en objetos Java. Para esto es 
+común utilizar la tecnología JAXB, el cual nos permitirá convertir objetos Java en documentos XML 
+(marshaling) y viceversa (unmarshaling).
+Como podemos observar son varias las tecnologías relacionadas para entender a detalle la creación de 
+SOAP Web Services, sin embargo la buena noticia es que el estándar JAX-WS nos permitirá ocultar y 
+automatizar muchos de los pasos necesarios para crear un Servicio Web, así como la creación del 
+Cliente del Web Services.

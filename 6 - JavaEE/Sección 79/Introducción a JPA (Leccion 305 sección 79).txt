@@ -1,0 +1,36 @@
+¿Qué es Java Persistence APIA (JPA)?
+Es el estándar de persistencia de Java. JPA implementa conceptos de frameworks ORM (Onject Relational Mapping).
+La mayoría de la información de las aplicaciones empresariales es almacenada en bases de datos relacionales.
+La persistencia de datos en Java, y en general en los sistemas de información, ha sido uno de los grandes temas
+a resolver en el mundo de la programación.
+Al utilizar únicamente JDBC tenemos el problema de crear demasiado código para poder ejecutar una simple consulta.
+Por lo tanto, para simplificar el proceso de interacción con una base de datos (select, insert, update, delete),
+se ha utilizado desde hace ya varios años el concepto de frameworks ORM (Object Relational Mapping), como Hibernate.
+Un framework ORM nos permite "mapear" una clase Java con una tabla de Base de Datos. Por ejemplo, la clase Persona,
+al crear un objeto en memoria, podemos almacenarlo directamente en la tabla de Persona, simplemente ejecutando una
+línea de código: em.persist (persona). Esto ha simplificado enormemente la cantidad de código a escribir en la 
+capa de datos de una aplicación empresarial.
+
+Características de JPA:
+La idea del API JPA es trabajar con objetos Java y no con código SQL, de tal manera que podamos enfocarnos en el
+primero. JPA permite abstraer la comunicación con las bases de datos y crea un estándar para ejecutar consultas
+y manipular la información de una base de datos.
+- Características:
+ - Persistencia utilizando POJOs: Este es posiblemente el aspecto más importante de JPA, debido a 
+   que cualquier clase de Java podemos convertirla en una clase de entidad, simplemente agregando 
+   anotaciones y/o agregando un archivo xml de mapeo
+ - No intrusivo: JPA es una capa separada de los objetos a persistir. Por ello, las clases Java de Entidad 
+   no requieren extender ninguna funcionalidad en particular ni saber de la existencia de JPA, por ello 
+   es no intrusivo.
+ - Consultas utilizando Objetos Java:  JPA permite ejecutar queries expresados en términos de objetos 
+   Java y sus relaciones, sin necesidad de utilizar el lenguaje SQL. Los queries son traducidos por el API 
+   de JPA en el código SQL equivalente.
+ - Configuración simple:  Muchas de las opciones de JPA están configuradas con opciones por default, 
+   sin embargo si queremos personalizarlas, es muy simple, ya sea con anotaciones o a través de 
+   archivos xml de configuración.
+ - Integración:  Debido a que las arquitecturas empresariales Java son por naturaleza multicapas, una 
+   integración transparente es muy valiosa para los programadores Java y JPA permite hacer la 
+   integración con las demás capas de manera muy simple. 
+ - Testing: Con JPA ahora es posible realizar pruebas unitarias, o utilizar cualquier clase con un método 
+   main fuera del servidor, simplemente utilizando la versión estándar de Java. Esto permite reducir los 
+   tiempos de desarrollo de las aplicaciones empresariales de manera considerable.

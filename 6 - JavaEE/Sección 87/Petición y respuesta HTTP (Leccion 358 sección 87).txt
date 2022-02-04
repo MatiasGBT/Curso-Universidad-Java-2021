@@ -1,0 +1,59 @@
+Request Headers (cabeceros de petición):
+Permiten obtener metadatos de la petición HTTP, como pueden ser:
+- El método HTTP utilizado en la petición (GET, POST, etc).
+- La IP del equipo que realizó la petición (192.168.1.1).
+- El dominio del equipo que realizó la petición (www.midominio.com).
+- El recurso solicitado, es decir, el URI (http://midominio.com/recurso).
+- El navegador que se utilizó en la petición (Mozilla, Chrome, etc).
+- Etc.
+
+Al enviar y recibir mensajes con REST Web Services, es necesario tener conocimiento de 
+códigos de estado. Algunos de los códigos de estado más utilizados son:
+- 200 (Ok): Significa que la respuesta fue correcta, este el código de estado por default.
+- 204 (Sin Contenido): El navegador continua desplegando el documento previo.
+- 301 (Movido Permanentemente): El documento solicitado ha cambiado de ubicación, y
+  posiblemente se indica la nueva ruta, en ese caso el navegador se redirecciona a la
+  nueva página de manera automática.
+- 302 (Encontrado): El documento se ha movido temporalmente, y el navegador se
+  mueve al nuevo url de manera automática.
+- 401 (Sin autorización): No se tiene permiso para visualizar el contenido solicitado,
+  debido a que se trató de acceder a un recurso protegido con contraseña sin la autorización respectiva.
+- 404 (No encontrado): El recurso solicitado no se encuentra alojado en el servidor Web.
+- 500 (Error Interno del Servidor Web): El servidor web lanzó una excepción
+  irrecuperable, y por lo tanto no se puede continuar procesando la petición.
+
+Cabeceros de respuesta y tipos MIME:
+Los cabeceros de respuesta se utilizan para indicarle al navegador Web cómo debe comportarse ante una respuesta de parte
+del servidor Web.
+Un ejemplo común es generar hojas de Excel, PDF´s, Audios, vídoes, etc, en lugar de solo responder texto.
+Para indicar el tipo de respuesta se utilizan los tipos MIME (Multipurpose Internet Mail Extensions).
+Los tipos MIME son un conjunto de especificaciones con el objetivo de intercambiar archivos a través de internet
+como puede ser texto, audio, vídeo, etc.
+
+Los tipos MIME (Multipurpose Internet Mail Extensions) son el estándar de internet para definir el tipo de información que
+recibirá el cliente (navegador Web) al realizar una petición al servidor Web.
+Los RESTful Web Services pueden devolver distintos tipos de contenido para un mismo recurso, por ejemplo:
+- application/xml – Mensaje XML
+- application/json - Mensaje JSON
+- text/html – Salida HTML
+- text/plain – Salida en texto plano
+- application/octet-stream – Datos binarios
+Lo anterior son los tipos de recursos que más se utilizan para el envío de información en REST. Lo más común es
+utilizar xml, sin embargo no está limitado a este tipo de información, ya que si estamos utilizando un cliente con
+Jquery y AJAX, es común que utilicemos la anotación de JSON en lugar de XML.
+
+Un listado más completo de tipos MIME es el siguiente:
+- application/msword: Microsoft Word document
+- application/pdf: Acrobat (.pdf) file
+- application/vnd.ms-excel: Excel spreadsheet
+- application/vnd.ms-powerpoint: Powerpoint presentation
+- application/zip: Zip archive
+- audio/x-wav: Microsoft Windows sound file
+- text/css: HTML cascading style sheet
+- text/html: HTML document
+- text/xml: XML document
+- image/gif: GIF image
+- image/jpeg: JPEG image
+- image/png: PNG image
+- video/mpeg: MPEG video clip
+- video/quicktime: QuickTime video clip

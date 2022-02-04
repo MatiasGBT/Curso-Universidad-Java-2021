@@ -1,0 +1,77 @@
+Representaciones con REST:
+Como podemos observar en la figura (ver PDF sección 87 página 6), REST utiliza el concepto de Representaciones,
+donde cada representación apunta a un Recurso(s) del lado del Servidor Java.
+
+Por ejemplo, para recuperar el objeto con id = 35, podemos utilizar el siguiente URI: 
+http://localhost:8080/sistema-sga/ws/personas/35
+Esto regresará la representación del objeto en el tipo MIME solicitado. Por ejemplo, si se solicitó una 
+representación en XML, la respuesta debería ser:
+<persona>
+	<id>35</id>
+	<nombre>Ernesto</nombre>
+	<apellido>Campos</apellido>
+	<email>ecampos@mail.com</email>
+</persona>
+
+De manera similar, podemos tener las operaciones básicas para agregar, modificar y eliminar recursos del lado 
+del servidor. Por ejemplo, las siguientes URL son ejemplos para cada una de las acciones mencinonadas:
+- Agregar: POST /personas/ - Solicita agregar un nuevo recurso. Los datos se especifican en el documento XML 
+  a enviar. Ej.
+  <persona>
+  	<id>101</id>
+  	<nombre>Juan</nombre>
+  	<apellido>Perez</apellido>
+  	<email>jperez@mail.com</email>
+  </persona>
+- Modificar: PUT /personas/123 – Solicita modificar el recurso 123 con un XML respectivo.
+- Eliminar: DELETE /personas/13 – Solicita eliminar el recurso 13.
+
+Anotaciones en Jax RS:
+Como podemos observar en la figura (ver PDF sección 87 pág 7), crear una clase que utilice JAX-RS para exponer un método
+como un servicio RESTfull Web Service en Java EE es muy simple. Anotaciones más utilizadas:
+- @Path: Esta anotación debe aparecer al inicio de la clase o en un método, e indica que esta clase/método se expondrá 
+  como un Servicio Web. Además, define la URI inicial del Servicio Web, la cual es relativa a la aplicación Web.
+- @GET, @POST, @PUT y @DELETE: Estas anotaciones se agregan a los métodos. Cada anotación representa el tipo de 
+  método HTTP que se va a utilizar. GET se utiliza para leer información, POST para agregar/modificar información. PUT 
+  se utilizar para agregar/modificar información y DELETE se utiliza para eliminar un elemento.
+- @PathParam: Para especificar parámetros se utilizan los signos { }. Los parámetros se adjuntan al método utilizando la 
+  anotación @PathParam. Puede haber múltiples parámetros. Ej. @Path("/personas/{tipo}/{id}").
+- @QueryParam: Permite procesar los parámetros del URL. Para especificar parámetros HTTP se agregan después de 
+  signo ?, y para agregar varios se utilizar el signo &. Ej. 
+  http://localhost:8080/webservice/personas?fechaInicio=01012012&fechaFin=31122012
+- @Produces: Indica el tipo MIME que enviará al cliente y se debe especificar por cada método. Por ejemplo: 
+  @Produces({"application/json","application/xml"}).
+- @Consumes: Indica el tipo MIME que puede aceptar. Por ejemplo, en el caso de insertar una nueva Persona, podemos 
+  aceptar un mensaje XML indicando lo siguiente en el método a procesar la petición: @Consumes("application/xml"). 
+  JAX-RS utilizará JAXB para convertir el documento XML en una clase Java, para ello la clase Java de tipo Persona
+  deberá tener la anotacion @XMLRootElement al inicio de la clase.
+
+Integración REST WS y una aplicación web:
+Si estamos utilizando las librerías del proyecto Jersey para desplegar REST Web Services, es necesario integrarlo
+con nuestra aplicación WEB, debido a que JAX-RS todavía no viene integrado de manera nativa con las aplicaciones Web.
+En la figura (ver PDF sección 87 pág 8) podemos observar la configuración necesaria del API del proyecto de Jersey 
+para poder producir y consumir RESTful Web Services.
+Para que la aplicación web reconozca las URI de los Servicios Web respectivos, es necesario configurar el Servlet
+del API de Jersey. Además, se debe especificar el elemento <servlet-mapping> con el url-pattern a utilizar.
+Por ejemplo, para solicitar el recurso persona id = 101, se debe utilizar el siguiente URL:
+http://localhost:8080/sistema-sga/webservices/personas/101
+Podemos observar que el URI mostrado incluye el url-pattern configurado
+anteriormente. Sin esta configuración no es posible ejecutar los Servicios Web.
+
+Integracío de EJB y JAX-RS:
+Como hemos visto los EJB proveen una serie de servicios como seguridad, transaccionalidad, entre otras 
+características. Este simple hecho tiene varias ventajas sobre clases puras de Java.
+El API JAX-RS en combinación con los EJB hace muy simple la integración entre estas tecnologías y así 
+exponer la funcionalidad de los EJB por medio de RESTful Web Services.
+Existen varias formas de lograr esta integración. En la figura (ver PDF sección 87 pág 9) se observa una forma de
+realizar esta integración.
+Sin embargo, lo que sí se debe planear con cuidado son los URI a utilizar, ya que de esto dependerá la 
+interface que utilizará el cliente para poder consumir los RESTful Web Services.
+
+Como podemos observar en la figura (la misma que la anterior), para exponer la funcionalidad de un método EJB podemos
+crear una clase enfocada a exponer únicamente los métodos de los EJB que necesitemos. Sin embargo, esta clase a su 
+vez debe ser un EJB de tipo Stateless para poder inyectar la funcionalidad de los EJB que se desee.
+Una vez realizada la inyección de dependencia del EJB, ya podemos utilizar los métodos del EJB, por ejemplo 
+para desplegar el listado de personas.
+Sin embargo, debido a que estamos regresando objetos de tipo Persona, esta clase se convierte de código Java a XML
+utilizando el API de JAXB. Para ello es necesario agregar la anotación @XmlRootElement a la clase Persona.

@@ -1,0 +1,94 @@
+Seguridad en JSF y PrimeFaces:
+Al autenticarnos correctamente por medio de la aplicación Web, JSF y en particular la 
+extensión de PrimeFaces, ha agregado varios elementos que nos permiten agregar muy 
+fácilmente seguridad a nuestras páginas JSF.
+De tal manera que podremos habilitar o deshabilitar funcionalidad, incluso a nivel de 
+componentes, botones, links, tablas, etc, dependiendo del rol del usuario que se ha 
+autenticado.
+Por ejemplo, tenemos las siguientes opciones para restringir componentes en una página JSF con PrimeFaces:
+#{p:ifGranted('ROLE_ADMIN')} //Solicitar si el rol es el especificado.
+#{p:ifAllGranted('ROLE_ADMIN, ROLE_EDITOR')} //Solicitar si el usuario pertenece a todos los roles especificados.
+#{p:ifAnyGranted('ROLE_USER, ROLE_ADMIN')} //Solicitar si el usuario pertenece a uno de los roles especificados.
+#{p:ifNotGranted('ROLE_GUEST')} //Si el usuario no pertenece a cierto rol.
+#{p:remoteUser()}
+#{p:userPrincipal()}
+Ejemplos de uso:
+<h:commandButton value="Eliminar Persona" rendered="#{p:ifGranted('ROLE_ADMIN')}" />
+<p:commandButton value="Reporte General" disabled="#{p:ifNotGranted('ROLE_USER, ROLE_ADMIN')}" />
+
+Tipos de seguridad en la capa EJB:
+Al momento de agregar seguridad a los EJB, existen 2 tipos:
+
+- Seguridad Declarativa: Indicamos al contenedor el tipo de validación deseada, a través de anotaciones o 
+  archivos de configuración xml. El contenedor se hace cargo de la mayoría de las tareas de validación, 
+  autenticación y autorización.
+En el caso de la seguridad declarativa, es posible aplicarla a nivel de la clase o a nivel de cada método. El 
+contenedor verifica el rol asignado del usuario autenticado previamente, y si cuenta con el rol solicitado, 
+entonces permite ejecutar el método del EJB respectivo.
+Para manejar la seguridad declarativa es común utilizar anotaciones.
+
+- Seguridad Programática: Existen situaciones en las que necesitamos un mayor control sobre la forma en 
+  que se realiza la autenticación y/o autorización, por ejemplo, a nivel usuario o grupo. La seguridad 
+  programática se puede combinar con la programación declarativa para incrementar el control sobre los 
+  requerimientos de seguridad en el sistema.
+La seguridad programática nos sirve cuando tenemos requerimientos más detallados, y que serían complicados o 
+imposibles de lograr con la Seguridad Declarativa. La buena noticia es que podemos combinar la Seguridad 
+Declarativa en conjunto con la Seguridad Programática, de tal manera que en los casos que necesitemos realizar 
+validaciones más detalladas, incluso por cada usuario, podremos combinar el poder de ambas opciones de 
+seguridad.
+
+Anotaciones en la capa EJB:
+Para la Seguridad Declarativa tenemos las siguientes Anotaciones disponibles en los componentes EJB:
+
+- @DeclareRoles: Esta anotación lista los roles que se utilizarán en el EJB. Solamente se puede utilizar a nivel
+  de la clase. Si esta anotación no se proporciona, el contenedor buscará en los roles definidos por la 
+  anotación @RolesAllowed y construye una lista de roles. Se recomienda agregarla debido a que en algunos
+  contenedores, al no agregarla, debemos agregar configuración extra para que detecte los roles que
+  estamos manejando. Si el EJB extiende de otra clase, la lista de roles se concatena, es decir, también se 
+  incluyen.
+
+- @RolesAllowed: Permite ejecutar los métodos del EJB siempre y cuando los roles se encuentren listados en 
+  esta anotación. Se puede definir al nivel de la clase o a nivel del método. Cuando se define al nivel de la 
+  clase, estamos indicando al contenedor que los roles listados podrán ejecutar cualquier método del EJB. Si 
+  agregamos esta anotación a nivel del método, sobreescribimos cualquier comportamiento definido a nivel
+  de la clase. Sin embargo debemos tener precaución al combinar los roles a nivel clase y nivel método para 
+  evitar que la mezcla o sobreescritura de roles se convierta en un problema.
+
+- @PermitAll: Como su nombre lo indica, permite a cualquier usuario ejecutar el método EJB anotado. Se 
+  debe utilizar esta anotación con precaución, ya que puede ser un hueco de seguridad si esta mal utilizado.
+
+- @DenyAll: Como su nombre lo indica, prohíbe a cualquier usuario ejecutar este método. Esta anotación 
+  provoca que el método quede inusable, sin embargo para deshabilitar cierta funcionalidad del sistema 
+  puede ser una posible solución.
+
+- @RunAs: Permite ejecutar el método como si el usuario tuviera otro rol, únicamente durante la ejecución 
+  de dicho método. Esto permite a un usuario con rol con menos privilegios, asignarle más privilegios, debido 
+  al cambio de rol, únicamente por la ejecución del método en cuestión.
+
+Tipos de clientes en Java EE:
+Cuando hablamos de una aplicación empresarial, podemos tener distintos clientes interesados en 
+obtener información de nuestro sistema. Esta información es comúnmente expuesta a través de la capa 
+de negocio o EJB.
+
+Como podemos observar en la figura (ver PDF sección 88 pág 9), tenemos podemos tener cliente Web, RMI, SOAP Web Service, 
+REST Web Service, entre otros.
+
+Desafortunadamente los mecanismos de autenticación entre los distintos clientes al día de hoy no son 
+estándar, y muchas de las veces dependemos todavía de la implementación del servidor Java que 
+estemos utilizando para poder comunicar cada cliente y poder autenticarnos de manera exitosa con el 
+servidor Java.
+
+En el ejercicio que realizaremos en esta lección incluiremos la autenticación de cada uno de los clientes 
+mostrados en la figura, ya que cada uno tiene diferentes mecanismos, incluso en algunos casos es 
+necesario utilizar clases que nos proporciona el servidor de aplicaciones que estemos utilizando, por lo 
+que la solución puede depender del servidor de aplicación en cuestión.
+
+El caso donde hay mayores pasos de configuración es el Cliente Web, ya que a su vez, según hemos 
+visto, funciona como un punto de autenticación del sistema, por lo tanto la propagación del objeto 
+Principal entre la capa Web y la capa EJB funciona de manera automática al utilizar la seguridad en Java 
+EE.
+
+Como conclusión, podemos observar la manera en que las diferentes tecnologías y tipos de clientes se 
+ven obligados a identificarse ante el sistema antes de poder acceder a cualquier recurso que se haya 
+agregado seguridad. Esto permite crear aplicaciones empresariales robustas, flexibles, más fáciles de 
+mantener y por supuesto seguras.

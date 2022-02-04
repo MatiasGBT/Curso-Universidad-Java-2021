@@ -1,0 +1,33 @@
+¿Qué es una aplicación empresarial?
+Vivimos en un mundo globalizado, donde la eficiencia y la productividad de las empresas es un factor crucial para su
+éxito o fracaso. Los sistemas de información juegan un papel fundamental en la mejora y consolidación de las compañias
+al día de hoy.
+Java permite crear aplicaciones para usuarios de distintos tipos, como son clientes de escritorio, web y mobile. Las
+aplicaciones empresariales Java tienen a su cargo establecer las reglas ded negocio de la empresa y/o sistema, y ofrecer
+conectividad a los distintos tipos de clientes, para ofrecer una solución integral a sus necesidades de sistemas de
+información a la medida.
+La versión empresarial de Java cuenta con una enorme comunidad de programadores al rededor del mundo, a su vez,
+una de las mejores ventajas de Java es su independencia de plataforma. De esta manera, el programador puede seleccionar
+entre utilizar herramientas de paga o de software libre, y esto comienza desde el sistema operativo hasta las herramientas
+de desarrollo, el servidor de aplicaciones, la base de datos, etc.
+La versión empresarial de Java tiene como objetivo la simplificación en la programación para requerimientos empresariales
+y con ello se busca incrementar la productividad del desarrollador Java.
+
+¿Qué es Java EE?
+- Para empezar a enteder Java EE tenemos que entender qué es un API: Un API es un conjunto de clases que nos permiten
+resolver una necesidad muy particular.
+- Java EE es un conjunto de APIs enfocadas en brindar servicios empresariales, como por ejemplo:
+ - Transaccionabilidad.
+ - Seguridad.
+ - Interoperabilidad.
+ - Etc.
+- Algunas de las APIs empresariales de Java son:
+ - JTA - Java Transaction API.
+ - JPA - Java Persistance API.
+ - JMS - Java Message Service.
+ - Etc.
+- Una de las ventajas de utilizar estas tecnologías, es que son el estandar propuesto por el grupo JCP (Java Community
+Process), el cual se encarga de revisar y liberar las especificaciones Java y las APIs empresariales respectivas.
+- En resumen, la versión empresarial de Java se puede extender como una extensión de la versión estandar JSE,
+pero con la intención de facilitar el desarrollo de aplicaciones empresariales, permitiendo agregar de manera muy
+simple los servicios descritos anteriormente y así crear aplicaciones Java robustas, poderosas y de alta disponibilidad.

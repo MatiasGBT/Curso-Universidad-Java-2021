@@ -1,0 +1,64 @@
+Manejo de transacciones:
+Al crear aplicaciones empresariales debemos poner especial atención en la persistencia. Además, 
+una aplicación empresarial, según hemos estudiado, se divide en distintas capas, las cuales tienen 
+responsabilidades bien definidas.
+En la figura (ver PDF sección 84) podemos observar en qué momento el objeto Transaction entra en participación. 
+Observamos las 3 capas de una arquitectura empresarial (Cliente – Servicio – Acceso a Datos). En 
+esta arquitectura la transacción comienza en la capa de servicio, la cual es la encargada de 
+establecer la comunicación con la Capa de Datos (DAO).
+La capa de datos es la responsable de establecer la comunicación con la base de datos a través 
+del objeto Entity Manager. La transacción comienza desde la capa de servicio, y se propaga a la 
+capa de datos. Esto se debe a que la capa de servicio puede tener comunicación con muchas 
+clases DAO, y por lo tanto la transacción termina hasta que el método de negocio haya insertado, 
+modificado, eliminado y seleccionado todos los datos requeridos de la base de datos, aplicando 
+las características del manejo transaccional.
+Los métodos de la capa de Servicio, son los que contienen mucha de la lógica de negocio de la 
+aplicación, y por lo tanto es en este nivel donde definimos el manejo transaccional, ya que si lo 
+aplicamos al nivel de la capa de datos, el manejo de commit/rollback por cada operación de un 
+DAO, afectaría las operaciones restantes que tenga un método de negocio.
+
+Configuración de propagación en Java EE:
+La propagación indica cómo se comportará un método ante una transacción que ha sido iniciada previamente 
+en otro método, es decir, cómo una transacción se propaga entre métodos transaccionales. El valor por defecto 
+de la propagación es REQUIRED. Los tipos de propagación en una transacción son los siguientes:
+- MANDATORY: El método tiene que ejecutarse dentro de una transacción, de lo contrario, se lanzará una excepción.
+- REQUIRED: Este es el comportamiento por default. El método DEBE ejecutarse dentro de una transacción. Si ya
+  existe una transacción el método la utilizará, de lo contrario creará una nueva.
+- REQUIRED_NEW: : Únicamente debe usarse si la acción sobre la base de datos necesita confirmarse (commit) 
+  sin importar el resultado de la transacción en curso, por ejemplo, un registro en una bitácora de actividades, 
+  por cada intento de persistencia de información, sin importar si se persiste exitosamente o no
+- SUPPORTS: Indica que el método no requiere el manejo transaccional, pero puede participar de una si se esta ejecutando.
+- NOT_SUPORTED: El método NO debe ejecutarse en una transacción. Si ya existe una transacción,
+  se suspenderá hasta la conclusión del método.
+- NEVER: El método NO debe ejecutarse en una transacción. De lo contrario arroja una excepción.
+
+Ejemplo en código:
+@Stateless
+public class PersonaServiceImpl {
+	@Resource
+	private SessionContext contexto;
+
+	public void modificarPersona(Persona persona) {
+		try {
+			personaDao.updatePersona(Persona persona);
+		} catch (Throwable t) {
+			context.setRollbackOnly();
+		}
+	}
+}
+
+El manejo de transacciones se lleva a cabo en los EJB de la capa de servicio o negocio.
+Como observamos en el código, el EJB PersonaService contiene métodos de servicio, los cuales por default
+son transaccionales al ejecutarse en un contenedor empresarial.
+El comportamiento por default de un método EJB es de tipo REQUIRED. Sin embargo si queremos modificarlo podemos
+utilizar el código TransactionAttribute(TransactionAttributeType.SUPPORTS) ya sea a nivel de la 
+clase para que afecte a todos los métodos, o al nivel del método que queremos modificar.
+El código debe estar dentro de un bloque try/catch, y si queremos aplicar rollback de manera 
+explícita deberemos utilizar setRollbackOnly() del objeto SessionContext, el cual podemos
+inyectar directamente utilizando la anotación @Resource.
+Sin embargo, utilizar el método setRollbackOnly no provocará el rollback de la transacción de 
+manera inmediata, es sólo una indicación de que en cuanto el contenedor termine de ejecutar el 
+método, deberá realizarse el rollback.
+Cada transacción JTA está asociada con la ejecución de un hilo (Thread), así que solo se puede 
+ejecutar una transacción a la vez. De tal manera que si una transacción se encuentra activa, el 
+usuario NO puede iniciar otra dentro del mismo hilo (a menos que dicha transacción sea suspendida).

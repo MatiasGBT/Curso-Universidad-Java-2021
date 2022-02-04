@@ -1,0 +1,56 @@
+Arquitectura empresarial con JPA:
+JPA aplica directamente en la capa de datos, la cual se encarga de tareas tales como:
+- Recuperación de información a través de consultas (select).
+- Manejo de información de objetos Java en las tablas de base de datos respectivas (insert, update, delete).
+- Manejo de una unidad de persistencia (Persistance Unit) para la creación y destrucción de conexiones a 
+  la base de datos.
+- Manejo de transacciones, respetando el esquema de propagación definido en la capa de negocio en los 
+  EJBs de Sesión.
+- Portabilidad hacia otras bases de datos con un impacto menor, así como bajo acoplamiento con las 
+  otras capas empresariales.
+- Etc.
+
+Además, para realizar tareas de persistencia se pueden utilizar patrones de diseño tales como:
+- DAO (Data Access Object): Este patrón de diseño suele definir una interfaz y una implementación de dicha interfaz,
+para realizar las operaciones más comunes con la Entidad respectiva. Por ejemplo, para la entidad Persona, generaremos
+la interfaz DaoPersona, y agregaremos los métodos agregarPersona, modificarPersona, eliminarPersona, findAllPersonas, etc.
+- DTO (Data Transfer Object): Este patrón de diseño permite definir una clase, que en ocasiones es muy 
+similar a la clase de entidad, ya que contiene los mismos atributos, pero con el objetivo de transmitirla a 
+las siguientes capas, incluso, hasta la capa Web. Por ello se les conoce como objetos de valor o de 
+transferencia.
+
+Clases de entidad:
+- Una clase de entidad es un POJO, y puede configurarse por medio de anotaciones o un archivo XML.
+- Ejemplo de clase de Entidad con anotaciones:
+@Entity //Con esto se indica que es una clase de entidad de JPA.
+public class Persona {
+	@Id //Indica que es una llave primaria
+	@GeneratedValue //Indicamos que el valor es autoincremental
+	private Long personaId;
+
+	//Los demás atributos se pueden dejar sin anotaciones si tienen el mismo nombre que en la tabla de la BD.
+
+	@Column(nullable = false) //Indicamos que el campo no puede ser nulo en la BD
+	private String nombre;
+
+	private String apellido;
+	private String email;
+	private Integer telefono;
+
+	//Constructores, getters y setters.
+}
+
+En las primeras versiones de J2EE, existía el concepto de Entity Beans para el manejo de persistencia.
+Sin embargo esta tecnología resultaba complicada para sistemas del mundo real, resultando en un bajo performance.
+Así mismo, realizar consultas (queries) utilizando los objetos Entity era muy complicado, se necesitaba un servidor
+de aplicaciones Java para ejecutar un EJB tipo Entity, no existían pruebas unitarias, y por lo tanto cualquier cambio
+en nuestro código implicada un nuevo deploy, consumiendo mucho tiempo simplemente en probar nuestro código 
+de persistencia, entre varios detalles más.
+Al día de hoy, una clase conocida como Entidad es simplemente un POJO, y en combinación con e uso de anotaciones,
+es suficiente para convertirla en una clase de Entidad, la cual representa un registro de una tabla de base de datos.
+Este tipo de conceptos, heredados de frameworks como Hibernate, TopLink, JDO, entre otros, contribuyó en lo que
+conocemos al día de hoy como el estándar de persistencia Java conocido como JPA.
+El API de JPA se puede utilizar en una aplicación estándar de Java o en un servidor Web o Empresarial Java.
+Ahora ya es posible realizar pruebas unitarias sobre nuestras clases de Entidad y Consultas sobre los objetos
+de Entidad, disminuyendo dramáticamente el tiempo de desarrollo de nuestras clases de entidad, consultas, y
+en general en la creación de la capa de datos de una aplicación empresarial.

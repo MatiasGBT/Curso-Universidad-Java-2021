@@ -1,0 +1,35 @@
+Formas de comunicarnos con un EJB
+Los EJBs pueden ser configurados de la siguiente forma, con el objetivo de permitir la comunicación con sus métodos:
+- Interfaces de Negocio: Estas interfaces contienen la declaración de los métodos de negocio que 
+  son visibles al cliente. Estas interfaces son implementadas por una clase Java. 
+- Una clase Java (bean): Esta clase implementa los métodos de negocio y puede implementar cero o 
+  más Interfaces de Negocio. Dependiendo del tipo de EJB, esta clase se debe anotar con 
+  @Stateless, @Stateful o @Singleton dependiendo del tipo de EJB que deseemos crear.
+
+A su vez, hay diferentes formas de comunicar el cliente con el EJB:
+- La interfaz local se utiliza cuando el cliente se encuentra en el mismo servidor Java, de esta 
+  manera se evita la sobrecarga de procesamiento al utilizar llamadas remotas vía RMI.
+- La interfaz remota se utiliza cuando el código del cliente se encuentra fuera del servidor Java y por lo tanto
+  debemos hacer llamadas remotas para poder ejecutar los métodos del EJB.
+- La no interface es una simplificación en la versión 3, ya que no se requiere de una interfaz para 
+  establecer la comunicación, siempre y cuando las llamadas sean locales, es decir, dentro del mismo 
+  servidor de aplicaciones Java.
+
+Las interfaces de negocio son interfaces que contienen la declaración de los métodos de negocio que son visibles
+al cliente. Estas son implementadas por una clase Java.
+También hay una clase bean la cual implementa los métodos de negocio y puede implementar 0 o más interfaces de negocio,
+dedpendiendo del tipo de EJB. Esta clase se debe anotar con @Stateless, @Stateful o @Singleton dependiendo del tipo de
+EJB a crear.
+
+Anatomía de un EJB:
+En el siguiente ejemplo se puede ver la estructura general de un EJB, el cual puede implementar o no una interface
+(local o remota), y puede tener uno o más métodos de negocio:
+
+...
+@Stateless
+public class HolaMundoEJB { //No implementa interface
+	
+	public int sumar(int a, int b) { //Método de negocio
+		return a + b;
+	}
+}

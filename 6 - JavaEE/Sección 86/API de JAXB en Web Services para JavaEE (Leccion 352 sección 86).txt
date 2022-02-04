@@ -1,0 +1,58 @@
+JAXB - Java Architecture for XML Binding:
+Al trabajar con Web Services, es necesario en algún momento convertir los mensajes XML en objetos 
+Java y viceversa. Existen varias APIs para realizar esta labor, sin embargo el estándar en la versión Java 
+EE es el API de JAXB.
+Como se puede observar en la figura (ver PDF sección 86), la tecnología JAXB provee dos principales características. La 
+habilidad de convertir un objeto Java en un documento XML (marshal) y viceversa (unmarshaling).
+JAXB permite de manera muy simple acceder y procesar documentos XML sin necesidad de conocer a 
+detalle XML u otras API’s de procesamiento.
+JAXB asocia el esquema (XSD) del documento XML a procesar (binding), y posteriormente genera las 
+clases Java que representan el documento XML (unmarshalling).
+Después de generado el código, se puede acceder y desplegar los datos del documento XML asociado, 
+simplemente utilizando las clases y objetos Java generados. No hay necesidad de utilizar un parser XML 
+o incluso, no hay necesidad de conocer el documento XML original.
+También es posible el proceso inverso (marshallling), en el cual a partir de código Java se generan el 
+documento XSD que representa la estructura de los objetos Java y su relación.
+
+Estrategia de generación de Web Services:
+Cuando creamos un nuevo Servicio Web, hay dos artefactos que deben generarse: El documento WSDL 
+y las clases Java que implementan el Servicio Web. Además, se debe generar el documento XSD 
+(esquema XML) asociado al mensaje XML a intercambiar por el Servicio Web.
+Con el documento WSDL y el esquema XSD, un cliente de un Web Services puede ser autogenerado con 
+ciertas herramientas, por el comando wsimport de Java. Este comando permite generar el código Java 
+necesario para invocar un Web Service a partir de la URL del WSDL. Existen herramientas similares en 
+otros lenguajes para crear los clientes de los SOAP Web Services de manera muy similar.
+Según podemos observar en la figura (ver PDF sección 86 pág 9) y enfocándonos en los dos principales artefactos,
+WSDL y el código Java, podemos tomar diferentes caminos. La estrategia a seleccionar puede ser por cada Web 
+Service de manera independiente, es decir, no es una decisión única.
+Cuando ya tenemos listo el código Java, delegamos la generación del Servicio Web al API de JAX-WS, lo 
+que generará de manera automática tanto el documento WSDL y el archivo XSD asociado al mensaje 
+XML a intercambiar, todo esto basado en el código Java y la relación existente en el método Web Service
+a exponer.
+JAX-WS puede exponer métodos de clases Java POJO’s o de EJB’s. Seleccionar uno u otro dependerá de 
+si queremos aprovechar los beneficios de tener un EJB, o utilizar un POJO para exponer métodos Java 
+como un Servicio Web.
+Para exponer un Servicio Web desde una clase Java solamente debemos anotar la clase con 
+@WebService y agregar la anotación @WebMethod al método a exponer como un Servicio Web. Esto 
+en automático generará el WSDL y el esquema XSD asociado.
+
+Ejemplo:
+
+Interface:
+@WebService
+public interface ServicioSumarWS {
+
+	@WebMethod
+	public int sumar(int a, int b);
+}
+
+EJB:
+@Stateless
+@WebServive(endpointInterface = "beans.ServicioSumarWS")
+public class ServicioSumarImpl implements ServicioSumarWS {
+
+	@Override
+	public int sumar(int a, int b) {
+		return a + b;
+	}
+}

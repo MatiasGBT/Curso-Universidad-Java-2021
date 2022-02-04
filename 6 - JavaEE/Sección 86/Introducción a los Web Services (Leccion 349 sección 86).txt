@@ -1,0 +1,33 @@
+¿Qué son los Web Services?
+El tema de Web Services ha sido utilizado ya por varios años, a lo largo de estos años se han aprendido 
+técnicas y nuevas formas de establecer una comunicación más eficiente entre sistemas creados en 
+distintas plataformas o tecnologías.
+
+Como podemos observar en la figura (ver PDF sección 86), en muchas ocasiones necesitamos intercomunicar sistemas de 
+información, los cuales pueden haber sido desarrollados en la misma tecnología o no. Java EE cuenta 
+con dos APIs principales para el desarrollo de Web Services: Java API for XML Web Services (JAX-WS) y 
+Java API for RESTful Web Services (JAX-RS).
+
+Los Web Services son una tecnología orientada a la intercomunicación de sistemas. Algunas de sus 
+características son:
+- Interoperabilidad y Portabilidad: Los sistemas que utilizan Servicios Web permiten intercambiar información entre
+  distintas plataformas y lenguajes de programación utilizando la Web (Intranet/Internet) como base para la comunicación.
+  Una de las formas es utilizar el protocolo en SOAP permitiendo la comunicación vía XML, logrando la independencia
+  de plataforma. Todo esto apoyándonos del protocolo HTTP.
+- Reusabilidad: Permite reutilizar mucha de la lógica de negocio proveniente de sistemas legados o de 
+  nuestros sistemas empresariales actuales.
+- Disponibilidad: El objetivo de los servicios web es que se encuentran disponibles en cualquier 
+  momento y en cualquier lugar, para cualquier sistema y/o persona que necesite utilizarlos. Además, 
+  no requieren de intervención humana incluso en transacciones muy complejas.
+
+Arquitectura de Web Services:
+En una aplicación Java Empresarial, los Web Services se pueden ver como una alternativa para exponer 
+los EJBs sin necesidad de utilizar RMI o el uso de Java.
+Los EJBs se pueden exponer como Servicios Web, con ello reutilizamos su lógica de negocio. Lo anterior 
+permite a El Cliente ser escrito en cualquier lenguaje como Objective-C, .Net, PHP, Android, etc, sin 
+ninguna dependencia con el lenguaje Java.
+Los SOAP Web Services requieren de un conocimiento básico de temas tales como XML, XSD (esquemas XML) y JAXB.
+Debido a que Java EE ha simplificado enormemente el proceso de creación de Web 
+Services, muchas de estas tecnologías estarán únicamente tras bambalinas.
+Los Web Services son una parte primordial para el desarrollo de arquitecturas SOA (Service-Oriented
+Architecture) con el objetivo de integrar aplicaciones creadas en la misma o distintas plataformas.

@@ -1,0 +1,36 @@
+Empaquetamiento de un EJB:
+Debido a que una aplicación JavaEE incluye distintos tipos de componentes como Servlets, JSF, EJB, Web Services, etc,
+estos componentes deben empaquetarse para ser desplegados en el servidor de aplicaciones Java.
+Los módulos EJB se depositan en META-INF/ejb-jar.xml y en WEB-INF/ejb-jar.xml para los módulos Web.
+EJB lite puede empaquetarse directamente en un archivo .war (Web Archive File) o .jar (Java Archive File).
+Si tus requerimientos utilizan la especificación completa de EJBs (llamadas remotas, JMS, llamadas asíncronas,
+Web Services, etc), entonces se debe empaquetar en un archivo .jar y no en un archivo .war.
+Un archivo .ear (Enterprise Archive File) es utilizado para empaquetar uno o más módulos, ya sean .jar o .war.,
+en un archivo único, el cual es reconocido por el servidor de aplicaciones y éste se encarga de desplegar
+correctamente cada módulo empaquetado en el archivo .ear.
+Si necesitamos desplegar una aplicación Web, podemos empaquetar los EJBs y las clases de Entidad en archivos .jar
+separados, los Servlets, y páginas JSP o JSF dentro del archivo .war, y estos archivos agregarlos a un 
+archivo .ear, el cual empaqueta todos los componentes en uno solo.
+Desde la especificación EJB 3.x, el concepto de EJB Lite puede empaquetar componentes EJB directamente en un
+archivo .war, sin necesidad del archivo .jar.
+Para ver un ejemplo gráfico consultar el PDF de la sección 78.
+
+Contenedor embebido en Java EE:
+Un contenedor embebido tiene como finalidad proveer un ambiente de ejecución JavaEE.
+
+En sus inicios, los EJB para ser probados, debían desplegarse en un contenedor J2EE compatible, y hasta no haber sido
+desplegados no había forma de saber si un componente funcionaba o no.
+Esto hacía muy lento el desarrollo de aplicaciones ya que el programador pasaba mucho tiempo desplegando su aplicación,
+únicamente para darse cuenta que debía corregir su código. Esto sin incluir el tiempo en detener y reiniciar el servidor
+de aplicaciones Java. Si una aplicación era de mediana a grande, podía demorar varios minutos por cada cambio en un
+componente sólo para revisar si se había programado correctamente.
+
+Ahora contamos con un contenedor embebido, el cual nos permite realizar pruebas unitarias de nuestros 
+componentes empresariales. La idea del contenedor embebido es poder ejecutar componentes EJB dentro 
+de aplicaciones Java SE (aplicaciones estándar), permitiendo utilizar la misma JVM (Java Virtual Machine) 
+para ejecutar pruebas (testing), procesos de tipo batch, EJB en aplicaciones de escritorio, entre varias tareas más.
+
+Un contenedor embebido provee del mismo ambiente de ejecución que un contenedor Java EE y puede 
+manejar los mismos servicios: inyección de dependencias, acceso a componentes empresariales, acceso a 
+CMT (Container-Managed Transactions) para el manejo de transacciones, etc
+En el PDF de la sección correspondiente (78) hay un ejemplo en código.

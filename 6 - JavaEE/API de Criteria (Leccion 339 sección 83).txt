@@ -1,0 +1,51 @@
+API de Criteria de JPA:
+La construcción de queries dinámicos conlleva mucha concatenación de cadenas si estamos 
+utilizando JDBC directo, incluso en queries complejos utilizando JPQL podemos tener demasiados 
+parámetros concatenados en la cadena JPQL. 
+Para simplificar este proceso, JPA ofrece el API de Criteria, el cual está basado en el API de Criteria
+de Hibernate, entre otros frameworks ORM, por lo tanto si ya se tiene conocimiento de Hibernate 
+y su API de Criteria o alguno similar, será más sencillo aprender esta API.
+Con el API de Criteria, es posible construir consultas dinámicas complejas, permitiendo configurar 
+desde el mismo lenguaje de programación (y no de tipo SQL) los filtros necesarios para dicha 
+consulta.
+Sin embargo tanto JPQL como el API de Criteria tiene su propio lugar dependiendo del problema
+que se pretenda resolver. El API de Criteria es muy utilizado cuando tenemos pantallas con 
+demasiados filtros de búsqueda, y el usuario tiene la opción de seleccionar uno o más filtros. En 
+cambio las consultas con JPQL funcionan muy bien cuando tenemos un número establecido de 
+parámetros y la mayoría de nuestro query es estático (no existe demasiada concatenación de 
+parámetros).
+Resumen:
+- API Criteria en JPA:
+  - El API de Criteria es una alternativa al uso de JPQL o SQL Nativo.
+  - Permite la combinación de campos de criterio complejos (ej: una pantalla de búsqueda avanzada).
+  - Permite crear queries dinámicos complejos más fácilmente, evitando el concatenado de cadenas.
+- Características del API de Criteria:
+  - Son escritros en código Java.
+  - Son typesafe (parámetros revisados en tiempo de compilación).
+  - Son queries portables (funcionan en cualquier base de datos).
+  - Se utilizan clases de Java en lugar de cadenas JPQL o SQL.
+  - Permite utilizar expresiones, joins, ordenamiento, etc.
+
+Ejemplo en código:
+// Query utilizando el API de Criteria
+// 1) Consulta de todas las Personas:
+log.debug("\n1) Consulta de todas las Personas");
+
+//1. El objeto EntityManager crea instancia CriteriaBuilder
+CriteriaBuilder cb = em.getCriteriaBuilder();
+
+//2. Se crear un objeto CriteriaQuery
+CriteriaQuery<Persona> criteriaQuery = cb.createQuery(Persona.class);
+
+//3. Creamos el objeto Raiz del query
+Root<Persona> fromPersona = criteriaQuery.from(Persona.class);
+
+//4. Seleccionamos lo necesario del from
+criteriaQuery.select(fromPersona);
+
+//5. Creamos el query typeSafe
+TypedQuery<Persona> query = em.createQuery( criteriaQuery);
+
+//6. Ejecutar la consulta
+List<Persona> personas = query.getResultList();
+mostrarPersonas(personas);

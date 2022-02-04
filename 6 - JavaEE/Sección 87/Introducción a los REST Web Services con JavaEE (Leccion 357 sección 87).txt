@@ -1,0 +1,48 @@
+REST Web Services:
+Los SOAP Web Services utilizan HTTP como el mecanismo de transporte. Una petición GET o POST es 
+ejecutada y un bloque de código XML es enviado al servidor. La URL que identifica al Servicio Web NO 
+necesariamente indica qué tipo de operación debe realizarse del lado del servidor. 
+Los RESTful Web Services, por otro lado, se basan completamente en las operaciones soportadas por el 
+protocolo HTTP para ejecutar la funcionalidad del lado del servidor. Cada llamada al Servicio Web, debe 
+utilizar alguno de los siguientes métodos HTTP: GET, POST, PUT, DELETE, URL, HEAD u OPTIONS. 
+REST significa Representational State Transfer y nació por la necesidad de simplificar la creación de Web 
+Services utilizando el protocolo HTTP como base. REST es una forma "ligera" y rápida de desarrollar y 
+consumir Web Services. Debido a que el protocolo HTTP es utilizado prácticamente en todos lados 
+donde utilicemos la Web, es posible reutilizar este mecanismo de comunicación como la base para la 
+transmisión de Servicios Web.
+La forma de crear un Web Services utilizando REST es a través de recursos (resources). Cada recurso 
+tiene asociado una URI, y cada URI representa a su vez una operación del Web Service.
+Ej: /personas - Es una URI que representa todas las entidades de tipo Persona de nuestro sistema.
+Ej: /personas/{id} - Esta URI representa una orden en particular. A partir de esta URI, podremos leer 
+    (read), actualizar (update) y eliminar (delete) objetos de tipo Persona.
+
+Principios de una arquitectura REST:
+- Recursos Direccionables: Los recursos pueden ser solicitados por medio de una URI.
+- Orientados a Representaciones: Clientes y Servidores intercambiar representaciones, las cuales pueden ser en XML,
+  JSON u otros.
+- Interfaces Restringidas: Podemos utilizar las operaciones básicas HTTP: GET, POST, PUT y DELETE, esto es similar a SQL:
+  SELECT, INSERT, UPDATE y DELETE respectivamente.
+
+Métodos HTTP:
+HTTP maneja 8 métodos, los cuales son: GET, DELETE, POST, PUT, HEAD, OPTIONS, TRACE y CONNECT. Cualquier 
+petición enviada hacia un Servicio Web debe especificar cualquiera de los 6 métodos HTTP listados posteriormente. Se 
+excluyen los métodos TRACE y CONNECT ya que no son relevantes para los Web Services de tipo RESTful.
+
+- GET: Se utiliza para operaciones de sólo lectura. No generan ningún cambio en el servidor.
+- DELETE: Elimina un recurso en específico. Ejecutar esta operación múltiples veces no tiene ningún efecto.
+- POST: Cambia la información de un recurso en el servidor. Puede o no regresar información.
+- PUT: Almacena información de un recurso en particular. Ejecutar esta operación múltiples veces no tiene 
+  efecto, ya que se está almacenando la misma información sobre el recurso.
+- HEAD: Regresa solo el código de respuesta y cualquier cabecero HTTP asociado con la respuesta.
+- OPTIONS: Representa las opciones disponibles para establecer la comunicación en el proceso de 
+  petición/respuesta de una URI.
+
+Con estos métodos debemos tomar en cuenta dos características muy importantes. Los métodos seguros e 
+idempotentes. Los métodos seguros (no modifican el estado del sistema) son aquellos que no hace otra tarea que 
+recuperar información, por ejemplo los métodos GET y HEAD. Los métodos idempotentes son aquellos que 
+siempre se obtiene el mismo resultado, sin importar cuantas veces se realice cierta operación. Métodos que son 
+idempotentes son: GET, HEAD, PUT y DELETE. El resto de los métodos no son ni seguros ni idempotentes.
+
+Aunque a nivel de programación es posible realizar más de una operación al momento de enviar una petición, por 
+ejemplo, actualizar y eliminar, esto NO debería programarse de esta manera, ya que rompe con la idea básica de 
+los REST Web Services.

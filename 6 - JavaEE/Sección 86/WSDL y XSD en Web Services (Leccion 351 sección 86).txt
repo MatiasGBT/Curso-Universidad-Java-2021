@@ -1,0 +1,48 @@
+WSDL - Web Services Description Language:
+WSDL (Web Services Description Language) es un lenguaje basado en XML, el cual provee la descripción
+de un servicio Web. De hecho provee una descripción bastante detallada del Servicio Web y con la cual
+es posible generar tanto el código del Cliente como del Servicio Web asociado. El código generado 
+manejará en automático la conversión de código Java a XML (marshaling) y viceversa (unmarshaling).
+Estructura general de un documento WSDL:
+- Types: En la sección de Types se definen los tipos a utilizar en el mensaje XML. Estos tipos se definen 
+  utilizando esquemas XML (xsd).
+- Message: Esta sección define los tipos de mensajes que el Servicio Web soporta. Los mensajes 
+  pueden estar compuestos de una o más partes, las cuales pueden ser de entrada (input) o de salida (output).
+- PortType: Esta sección define un grupo de operaciones (interface del web service). Cada operación 
+  debe tener un nombre único y contiene una combinación de elementos de entrada (input) y salida 
+  (output), los cuales hacen referencia a los elementos Message.
+- Binding: Esta sección relaciona el portType (interface) con el protocolo a utilizar (ej. SOAP).
+- Service: Esta sección relaciona la sección Binding como servicios y define un endpoint.
+
+XML y Scheme XSD:
+Existen varias formas de validar un documento XML. Esto es básico al momento de transmitir un mensaje a través de un Web 
+Services. La validación nos permitirá automatizar los mensajes entre el Cliente y el Servidor sin necesidad de intervención 
+humana.
+Para validar un documento XML es posible realizarlo por medio de dos técnicas. La primera conocida como DTD (Document
+Type Definition) y la segunda como XSD (Schema XML). La validación de archivos por DTD es cada vez menos utilizada, 
+debido a que el lenguaje que se utiliza no es XML, y por lo tanto tiene varias limitantes al momento de validar documentos 
+XML con restricciones más avanzadas.
+Por otro lado, la validación por XML Schema es cada vez más utilizado para validar la estructura y restricciones de un 
+documento XML. Ya que permite agregar mucho más precisión al momento de validar elementos y atributos complejos de 
+un documento XML, y debido a que está creado con el mismo lenguaje XML, favorece bastante para crear validaciones 
+robustas y flexibles.
+Ejemplo de esquema de validación:
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="nota">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="para" type="xs:string"/>
+				<xs:element name="de" type="xs:string"/>
+				<xs:element name="titulo" type="xs:string"/>
+				<xs:element name="contenido" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+Ejemplo de un XML validado por el esquema anterior:
+<nota>
+	<para>Juan</para>
+	<de>Karla</de>
+	<titulo>Recordatorio</titulo>
+	<contenido>Nos vemos el viernes!</contenido>
+</nota>

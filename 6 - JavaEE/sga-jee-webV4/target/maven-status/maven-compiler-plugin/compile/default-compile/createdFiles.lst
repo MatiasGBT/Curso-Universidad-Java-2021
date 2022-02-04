@@ -1,0 +1,16 @@
+sga\datos\PersonaDaoImpl.class
+sga\web\PersonaServlet.class
+sga\servicio\UsuarioServiceImpl.class
+sga\cliente\jpql\PruebaJPQL.class
+sga\domain\Usuario.class
+sga\datos\UsuarioDao.class
+sga\datos\UsuarioDaoImpl.class
+sga\cliente\cascade\PersistenciaCascadaJPA.class
+sga\datos\PersonaDao.class
+sga\web\UsuarioServlet.class
+sga\servicio\UsuarioService.class
+sga\domain\Persona.class
+sga\servicio\PersonaService.class
+sga\servicio\PersonaServiceRemote.class
+sga\cliente\asociaciones\ClienteAsociacionesJPA.class
+sga\servicio\PersonaServiceImpl.class

@@ -1,0 +1,8 @@
+cliente\ws\servicio\PersonaServiceImplService.class
+cliente\ws\servicio\package-info.class
+cliente\ws\servicio\ListarPersonasResponse.class
+test\clientews\TestPersonaServiceWs.class
+cliente\ws\servicio\ObjectFactory.class
+cliente\ws\servicio\ListarPersonas.class
+cliente\ws\servicio\Persona.class
+cliente\ws\servicio\PersonaServiceWs.class

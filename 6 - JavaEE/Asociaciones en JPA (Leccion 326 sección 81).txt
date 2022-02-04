@@ -1,0 +1,94 @@
+Relaciones en JPA:
+Normalmente los objetos de entidad, en un sistema con bases de datosrelacionales, mantienen asociaciones con uno
+o más objetos. Los tipos de relaciones en JPA son las mismas que se manejan en la teoría de bases de datos relacionales.
+Tipos de relaciones:
+- 1 a 1 @OneToOne
+- 1 a muchos @OneToMany
+- Muchos a 1 @ManyToOne
+- Muchos a muchos @ManyYoMany
+JPA soporta las relaciones mencionadas en los archivos de mapeo de cada clase de
+Entidad o en las clases Java utilizando anotaciones.
+
+Las relaciones también tienen navegabilidad (directionality), esto quiere decir que
+podemos acceder a los objetos con los que tenemos relación de manera
+unidireccional o bidireccional.
+- Unidireccional: Se define el atributo de relación solo en una clase.
+- Bidireccional: Se define el atributo de relación en ambas clases.
+Esto lo logramos debido a que en los objetos de entidad manejamos un atributo que identifica el objeto(s) d
+entidad(es) con el que tenemos relación.
+
+Ejemplo de relación 1 a 1 (ver PDF de la sección 81 pág 4):
+- Un Alumno tiene un Domicilio.
+- La clase de Alumno es la que guarda la referencia de un objeto Domicilio (unidireccional).
+Podemos observar que la clase de Alumno es la que guarda la referencia de un objeto Domicilio, para mantener una
+navegabilidad unidireccional y que a partir de un objeto Alumno podamos recuperar el objeto Domicilio asociado. 
+Es importante destacar que el manejo de relaciones es por medio de objetos, y no atributos aislados, esto nos
+permitirá ejecutar queries con JPQL que recuperen objetos completos. Este tema lo estudiaremos más adelante.
+
+Ejemplo de relación 1 a muchos (ver PDF de la sección 81 pág 5):
+- Un Instructor imparte muchos Cursos.
+- Relación unidireccional.
+Si queremos saber desde la clase Curso qué instructor tiene asociado, deberemos agregar el mapeo bidireccional
+(ManyToOne) hacia Instructor. Y en la clase Instructor, se especifica una relación uno a muchos (OneToMany)
+hacia una colección de objetos de tipo Curso, el cual puede ser una estructura de datos Set o un List, 
+dependiendo si queremos manejar orden o no, respectivamente (Ver ejemplo de código del vídeo lección 81).
+
+Ejemplo de relación de muchos a muchos (ver PDF de la sección 81 pág 6):
+- Un Alumno tiene muchos Cursos y un Curso tiene muchos Alumnos.
+- Estas relaciones son bidireccionales.
+Este tipo de relaciones Muchos a Muchos se pueden representar también con JPA, sin embargo este tipo de relaciones
+es mejor aplicar el concepto de normalización de base de datos para simplificar este tipo de relaciones y en lugar
+de tener relaciones muchos a muchos, tengamos relaciones Uno a Muchos o Uno a Uno.
+Si no normalizamos este tipo de relaciones podemos caer en referencias circulares, debido a que un Alumno puede
+tener un Curso, pero un Curso puede tener a su vez al mismo Alumno. Para corregir esto vamos a normalizar (simplificar)
+esta relación, para que quede como una relación de Uno a muchos o de Uno a Uno.
+
+Ejemplo de relación de muchos a muchos normalizada (ver PDF de la sección 81 pág 7):
+- Un Alumno tiene muchos Cursos y un Curso tiene muchos Alumnos.
+Ya no se relacionan ambas tablas directamente, si no que ahora hemos puesto una tabla intermedia, esta tabla 
+intermedia se le conoce como tabla transitiva y lo que estamos haciendo es convertir la relación de Muchos a Muchos
+a una relación de Uno a Muchos de Alumnos hacia Asignación y una relación de Uno a Muchos de la tabla de Curso hacia
+la tabla Asignación.
+Las llaves primarias de id_alumno y de id_curso las agregamos como llaves foráneas a la tabla de Asignación y a su vez
+combinándolas se convierte en una llave primaria compuesta para la tabla de Asignación, esas son algunas de las mejores
+prácticas que vamos a utilizar en JPA. Sin embargo también se puede agregar una llave primaria simple a la tabla de
+Asignación y así no manejar llaves primarias compuestas. Cualquiera de las dos opciones es factible.
+A pesar de que pudimos haber manejado una relación de Muchos a Muchos directamente con JPA, normalizar este tipo de
+relaciones no permite administrar más fácilmente las relaciones de Uno a Muchos o Uno a Uno, y por lo tanto más
+sencillas de dar mantenimiento.
+Además, una vez que hemos generado una tabla transitiva para el Alumno y el Curso, podemos agregar ciertos atributos
+de la nueva relación, por ejemplo un Alumno al estar tomando un Curso 
+puede estar en cierto horario, entre otro tipo de atributos.
+
+Fetching de relaciones:
+Con JPA podemos especificar el comportamiento de las colecciones de objetos relacionadas a 
+nuestra clase de Entidad. Existen dos tipos:
+
+1. Lazy Loading (Carga Retardada): La carga retardada significa que la colección definida en la 
+   clase de Entidad respectiva no va a ser recuperada, de esta manera evitamos realizar 
+   demasiados queries por cuestiones de las colecciones de objetos asociadas. Este es el 
+   comportamiento por default en las relaciones OneToMany y ManyToMany. En otros casos 
+   debemos especificarlo de manera explicita como el ejemplo mostrado.
+
+2. Eager Loading (Carga Inmediata): La carga inmediata significa que las colecciones asociadas a 
+   una Entidad son recuperadas, y por lo tanto debemos tener cuidado con este comportamiento 
+   debido a que las colecciones marcadas con Eager son recuperadas junto con el objeto de 
+   Entidad, realizando más consultas que si solo se recuperara el Objeto de Entidad en cuestión. 
+   Sin embargo, este no es el comportamiento por default, por lo que debemos especificar el tipo de carga
+   que deseamos realizar para que el tipo Eager o carga inmediata de la asociación respectiva se ejecute.
+
+Este tipo de comportamiento de carga de las colecciones, también conocido como Fetch, lo 
+podemos especificar ya sea en las relaciones definidas en nuestra clase de entidad o en queries
+de tipo JPQL o Criteria de JPA
+
+Guardado en cascada:
+Una de las características de persistencia en JPA es la posibilidad de persistir un objeto de Entidad junto con
+sus relaciones. Como podemos observar en la figura, tenemos el objeto Persona, y a su vez tenemos la relación
+con el objeto Usuario (ver PDF sección 81 pág 10).
+Por default si queremos persistir un objeto Usuario, no guardará los datos de Persona, sin embargo si indicamos
+en el mapeo de estas relaciones que también guarde la información, utilizando la anotación de persistencia en cascada,
+entonces se guardará no solamente el objeto Usuario, sino que también se podría guardar la
+información asociada con la entidad de Persona.
+La anotación es similar a esta: @OneToOne(cascade=CascadeType.PERSIST), o 
+también @OneToMany(cascade=CascadeType.PERSIST), dependiendo del tipo de 
+relación que tengamos.

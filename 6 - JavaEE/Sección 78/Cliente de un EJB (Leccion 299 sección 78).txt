@@ -1,0 +1,27 @@
+Cliente EJB vía JNDI:
+- JNDI es una API que permite encontrar servicios o recursos empresariales en un servidor de aplicaciones Java.
+- Para encontrar un EJB a partir de la versión 3.1 se puede utilizar la siguiente sintaxis:
+  java:global[/<app-name>]/<module-name>/<bean-name>[!<fully-qualified-interface-name>]
+- En un inicio JNDI era la única a manera de encontrar los componentes EJB, pero conforme se introdujo el 
+  concepto de EJB locales y el manejo de anotaciones existieron otras maneras de ubicar y proporcionar una 
+  referencia de los componentes empresariales que se necesitan, a este concepto se le conoce como 
+  inyección de dependencias.
+- Hay un ejemplo visual en el recurso PDF del curso sobre código Java para encontrar un EJB.
+
+Inyección de dependencias:
+Existen 2 tipos de inyección de dependencias en EJB:
+1- Utilizando la anotación @EJB: Esta opción está disponible desde la versión Java EE 5, sin embargo es la forma de 
+   inyección de dependencias más básica. La anotación @EJB se recomienda cuando utilizamos llamadas remotas a 
+   los EJB, inyectar un recurso (JDBC DataSource, JPA, Web Service, etc) o si queremos mantener compatibilidad 
+   con Java EE 5. Ejemplo de código en el cliente:
+	@EJB
+	private PersonaEJBRemote personaEJB;
+2- Utilizando la anotación @Inject: Esta forma de inyección de dependencia se apoya del concepto CDI (Context and
+   Dependency Injection), y está disponible a partir de la versión Java EE 6. Esta forma es más flexible y robusta, ya 
+   que muchos de los conceptos fueron tomados de la experiencia de otros frameworks como Spring, los cuales 
+   tienen métodos de inyección de dependencias más poderosos y robustos. Para que el servidor de aplicaciones 
+   Java reconozca el concepto de CDI, se debe agregar un archivo llamado beans.xml. Se recomienda utilizar la 
+   anotación @Inject sobre @EJB en todos los casos, excepto cuando tenemos EJBs remotos o queremos mantener 
+   compatibilidad con Java EE 5. Ejemplo de código en el cliente:
+	@Inject
+	private PersonaEJB personaEJB;

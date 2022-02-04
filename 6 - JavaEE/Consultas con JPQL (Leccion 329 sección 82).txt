@@ -1,0 +1,51 @@
+Java Persistence Query Language (JPQL):
+Java Persistence Query Language (JPQL) nos permite recuperar información de la Base de Datos. JPQL se enfoca en ejecutar
+queries que regresen objetos Java, en lugar de datos individuales.
+
+¿Qué es Java Persistence Query Language ( JPQL)?:
+- Es un Lenguaje de Consulta, similar a SQL pero utilizando objetos Java.
+- Permite ejecutar Queries Parametrizables.
+- Cuenta con una Consola de Ejecución en IDE’s como Eclipse o MyEclipse.
+- Se pueden ejecutar Consultas Avanzadas para recuperar colecciones de datos.
+- Ejemplo consulta con JPQL: SELECT p FROM Persona p
+
+Características de JPQL:
+- Uso de select, from y where y subselects.
+- Sensible a Mayúsculas/Minúsculas.
+- Asociaciones, uso de joins y fetch.
+- Uso de expresiones y operadores como: +, >, between, upper, etc.
+- Uso de Funciones de agregación, tales como: avg, sum, count, etc.
+- Uso de order by y group by
+
+JPA permite recuperar los objetos de diferentes maneras, tanto utilizando una sintaxis muy similar a SQL,
+pero también utilizando código Java, conocido como API de Criteria y Query By Example.
+Tipos de Queries:
+- Dynamic queries: Consultas que reciben parámetros en tiempo de ejecución.
+- Named queries: Consultas ya creadas previamente, y que se pueden ejecutar solo utilizando el nombre.
+- Native queries: Consultas con SQL nativa, ya que hay casos de uso que lo requieren.
+- Criteria API queries: Consultas con una sintaxis con código Java, en lugar de SQL.
+
+Ejemplos de queries JPQL:
+El lenguaje de consultas de JPA nos permite utilizar los objetos de Entidad y realizar consultas que 
+se traducirán en queries de SQL según el motor de base de datos que utilicemos.
+Una de las grandes ventajas de JPQL es que no importa el motor de base de datos que estemos 
+utilizando, ya que la mayoría de las consultas JPQL podremos ejecutarlas prácticamente en 
+cualquier motor de base de datos, ya que no es SQL directo, sino una capa más arriba (más 
+abstracto) y por lo tanto son consultas más generalizadas.
+Ejemplos:
+- Consulta de todas las Personas: select p from Persona p //Recuperamos el listado de personas
+- Consulta de la Persona con id=1: select p from Persona p where p.idPersona = 1
+- Consulta de la Persona por nombre: select p from Persona p where p.nombre = 'Juan'
+- Consulta de datos individuales, se crea un arreglo (tupla) de tipo object de 3 columnas:
+  select p.nombre as Nombre, p.apePaterno as Paterno, p.apeMaterno as Materno from Persona p
+- Obtiene el objeto Persona y el id, se crea un arreglo del tipo Object con 2 columnas:
+  select p, p.idPersona from Persona p
+- Obtiene la lista de personas utilizando el constructor del idPersona:
+  select new sga.domain.Persona(p.idPersona) from Persona p
+- Regresa el valor mínimo y máximo del idPersona (Scalar results):
+  select min(p.idPersona) as MinId, max(p.idPersona) as MaxId, count (p.idPersona) as Contador from Persona p
+- Extrae los nombres de personas que son distintos: select count(distinct p.nombre) from Persona p
+- Concatena y convierte a mayúsculas el nombre y el apellido:
+  select CONCAT (p.nombre, ' ', p.apellido) as Nombre FROM Persona p
+- Obtiene el objeto Persona con id igual al parámetro:
+  select p from Persona p where p.idPersona = :id

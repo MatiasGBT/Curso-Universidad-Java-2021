@@ -1,0 +1,42 @@
+Java Server Faces en JavaEE:
+En la figura (ver PDF sección 85) podemos observar el rol de la tecnología JSF en una arquitectura Java Empresarial. JSF 
+aplica directamente en la capa de presentación, la cual se encarga de tareas tales como:
+- Generación de Código de Presentación, con tecnologías como HTML, CSS y JavaScript con
+  componentes previamente creados o personalizados.
+- Procesamiento de peticiones HTTP provenientes del cliente a través de formularios HTML, con 
+  posibilidad de agregar peticiones AJAX, es decir, peticiones asíncronas.
+- Validación de parámetros recibidos en la petición HTTP.
+- Convertidores para poder trabajar directamente con tipos como Date, Boolean, Integer, etc.
+- Recuperación de la información del Modelo, apoyándose de la Capa de Servicio (EJB’s) para ello.
+- Procesamiento de la respuesta y selección de la vista a mostrar al cliente, aplicando el concepto de Navegación.
+
+¿Qué es JSF?
+- JavaServer Faces es el marco de aplicaciones web estándar para Java Enterprise Edition (Java EE).
+- Al ser un estándar de Java la tecnología cuenta con el apoyo de una industria muy sólida.
+- Se cuenta con un fuerte apoyo de IDEs de Java, así como Servidores de Aplicaciones para su despliegue.
+- El número de empresas que extienden la funcionalidad de JSF es muy amplia y muchos proyectos son OpenSource.
+JavaServer Faces (JSF) fue diseñado para simplificar la construcción de interfaz de 
+usuario para aplicaciones Web.
+
+Características de JSF:
+- El framework de JSF implementa el patrón de diseño Modelo-VistaControlador, proporcionando un enfoque
+  orientado a eventos.
+- RAD (Rapid Application Development): Debido al número de componentes listos para utilizarse, JSF agiliza el desarrollo
+  de aplicaciones Web para Java.
+- Componentes de interfaz de usuario (GUI): JSF provee un API para crear componentes HTML complejos,
+  incluyendo JavaScript y CSS integrado, creando componentes reutilizables.
+- Render-Kits: Los componentes pueden desplegarse no solamente en navegadores Web, sino en dispositivos móviles
+  u otros tipos de clientes.
+- Extensibilidad: JSF permite crear más fácilmente nuevos componentes, por lo que existen varios frameworks
+  que extienden el poder de JSF y Ajax, tales como richFaces, iceFaces, entre otros.
+- Internacionalización: Las vistas pueden mostrarse en distintos idiomas.
+
+Nuevas características en JSF 2.X:
+- Manejo de condiciones por default más inteligentes: Esto aplica en casos de navegación simples, los cuales ya no se
+  requiere agregarlos al archivo de configuración faces-config.xml.
+- Manejo de anotaciones para varias configuraciones: Esto simplifica en gran medida agregar un Managed Bean a nuestra
+  aplicación, evitando su declaración en el archivo faces-config.xml. Más adelante veremos el concepto de Managed Beans.
+- Soporte nativo para AJAX: La tecnología AJAX ya es parte del ciclo de vida de JSF.
+- Soporte por default para Facelets: La tecnología de los Facelets toma en cuenta el ciclo de vida de JSF,
+  a diferencia de los JSP’s.
+- Más componentes y validadores: Se han creado y agregado nuevos componentes a la librería estándar de JSF.

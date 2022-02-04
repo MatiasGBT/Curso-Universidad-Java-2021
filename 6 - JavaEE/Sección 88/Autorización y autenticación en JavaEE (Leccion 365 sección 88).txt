@@ -1,0 +1,40 @@
+Autenticación y Autorización en JavaEE:
+La seguridad en Java EE está basada ampliamente en el API de JAAS (Authentication and 
+Authorization Service). Como su nombre lo indica, esta API es responsable del proceso de 
+autenticación de los usuarios y autorización de recursos de los sistemas Java, sobre todo 
+enfocado en agregar seguridad en la capa Web y la capa de negocio donde se encuentran los 
+EJB.
+Una vez que el usuario del sistema es autenticado, el contexto de la autenticación es propagado 
+a través de las distintas capas de una aplicación empresarial, siempre que sea posible. Esto se 
+realiza para que evitar el proceso de autenticación por cada una de las capas.
+Una vez que el usuario se ha autenticado, el API de seguridad JAAS crea un objeto conocido 
+como Principal. Este objeto es propagado entre las capas con el objetivo de ya no solicitar 
+nuevamente la autenticación del usuario.
+Como se observa en la figura (ver PDF sección 88 pág 4), un usuario se puede autenticar por medio de una aplicación 
+Web, a su vez la capa Web recupera la información y autentica al usuario, creando el objeto Principal en caso de una
+autenticación exitosa.
+El objeto Principal está asociado con uno o más roles. El sistema de seguridad revisa por cada 
+acción, ya sea en la capa Web o en la capa de EJBs, que se tengan los permisos para ejecutar 
+dicho recurso. 
+El objeto Principal es enviado de manera transparente entre las capas Web y EJB según sea 
+necesario.
+
+Asegurando la capa Web:
+La seguridad en la capa Web se realizar a través del archivo descriptor web.xml. Existen distintos tipos de autenticación
+los cuales son HTTP Basic, HTTP DIGEST, HTTPS Client-Cert y FORM based.
+Según observamos en el código de la figura (ver PDF sección 88 pág 5), el primer elemento que agregamos es <login-config>,
+el cual nos permite especificar la forma en que el contenedor Web recuperará la información para poder autenticar
+a los usuarios.
+Posteriormente tenemos el elemento <security-constraint>, el cual nos permitirá especificar los recursos (URL) a las
+cuales agregaremos seguridad, así como los Roles que participarán en la revisión de la seguridad. Es posible especificar
+incluso el tipo de Método HTTP que se permitirá (ej. GET, POST, PUT, DELETE, etc).
+El tipo de autenticación mostrado en la figura es de tipo BASIC, el cual el navegador Web mostrará un pop-up genérico 
+solicitando el usuario y password para poder autenticarse al sistema. Otro método muy comúnmente utilizado es el método 
+basado en una forma HTML (FORM based). Esta configuración tiene la ventaja de que es posible personalizar la página de 
+autenticación que se muestra al usuario.
+Posteriormente el realm-name. Un realm es una abstracción del servidor de aplicaciones, donde se especifican las políticas
+de seguridad del sistema. Un realm contiene una colección de usuarios, los cuales pueden o no ser asociados a un grupo.
+Un realm se configurar utilizando las herramientas de administración del servidor de aplicaciones en cuestión.
+El elemento <security-constraint> nos permite especificar una o más colecciones de URL que deseamos agregar seguridad. 
+Por medio de un url-pattern, especificamos las páginas a asegurar. Finalmente con el elemento <auth-constraint> 
+especificamos los roles permitidos para ejecutar el recurso especificado.

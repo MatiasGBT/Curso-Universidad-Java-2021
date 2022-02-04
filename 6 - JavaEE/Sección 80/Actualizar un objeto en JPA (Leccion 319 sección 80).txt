@@ -1,0 +1,87 @@
+Actualizar un objeto persistente en JPA:
+Para esto se utilizaran dos transacciones, la primera para encontrar el objeto y poderlo modificar (esto último
+fuera de la transacción), y la segunda para persistir los cambios en la BD.
+1. Iniciar transacción 1.
+2. Ejecutamos SQL (método find()). Convierte el objeto en estado persistente. Posteriormente se hace commit
+   de la transacción y la cerramos.
+3. Termina la transacción 1 y se coloca en estado de Detached.
+4. Una vez obtenido el objeto de entidad, se puede agregar o modificar valores.
+5. Se inicia la segunda transacción (para guardar los valores).
+6. Ejecutamos SQL (método merge()). Convierte el objeto en estado persistente. Posteriormente se hace commit
+   de la transacción y la cerramos.
+7. Termina la transacción 2 y el objeto termina en estado de Detached.
+
+Ejemplo en código:
+@Test
+public void testActualizarObjeto() {
+	//Paso 1. Inicia transacción 1
+	EntityTransaction tx1 = em.getTransaction();
+	tx1.begin();
+
+	//Paso 2. Ejecuta SQL de tipo select
+	//El id prporcionado debe existir en la base de datos
+	Persona persona1 = em.find(Persona.class, 23);
+
+	//Paso 3. Termina transacción 1
+	tx1.commit();
+
+	//Objeto en estado detached
+	log.debug("Objeto recuperado:" + persona1);
+
+	//Paso 4. setValue (nuevoValor)
+	persona1.setApeMaterno("Nava");
+
+	//Paso 5. Inicia transacción 2
+	EntityTransaction tx2 = em.getTransaction();
+	tx2.begin();
+
+	//Paso 6. Ejecuta SQL. Es un select, pero al estar modificado, 
+	//al terminar la transacción hará un update
+	//Como ya tenemos el objeto hacemos solo un merge para resincronizar
+	//el objeto a hacer merge, debe contar con el valor de la llave primaria
+	em.merge(persona1);
+
+	//Paso 7. Termina transacción 2
+	//Al momento de hacer commit, se revisan las diferencias 
+	//entre el objeto de la base de datos
+	//y el objeto en memoria, y se aplican los cambios si los hubiese
+	tx2.commit();
+
+	//Objeto en estado detached ya modificado
+	log.debug("Objeto recuperado:" + persona1);
+}
+
+Actualizar un objeto persistente con session larga:
+Session larga se refiere a que la transacción no se cierra y se puede recuperar y modificar el objeto dentro de una
+misma transacción.
+1. Inicia la transacción.
+2. Ejecuta SQL (método find()). El objeto pasa al estado de Persistente y se obtiene la entidad.
+3. Se modifican los valores del objeto entidad. Una vez obtenidos los nuevos valores hacemos un flush() y un
+   commit() de la transacción.
+Nota: No hay necesidad de hacer un UPDATE explícito ya que al terminar la transacción (commit) se ejecuta el update.
+4. Termina la transacción (el objeto pasa al estado de Detached).
+
+Ejemplo en código:
+@Test
+public void testActualizarObjetoSesionLarga() {
+	//Paso 1. Inicia transacción 1
+	EntityTransaction tx1 = em.getTransaction();
+	tx1.begin();
+
+	//Paso 2. Ejecuta SQL de tipo select
+	//Puede ser un find o un merge si ya tenemos el objeto
+	Persona persona1 = em.find(Persona.class, 23);
+
+	//Paso 3. setValue (nuevoValor)
+	persona1.setApeMaterno("Aguirre");
+	persona1.setApeMaterno("Torres");
+
+	//Paso 4. Termina transacción 1
+	//Ejecuta el update, aunque hayamos hecho 2 cambios sobre el objeto
+	//unicamente persiste el último cambio del objeto
+	//es decir, el valor de apeMaterno=Torres
+	tx1.commit();
+
+	//Objeto en estado detached
+	log.debug("Objeto recuperado:" + persona1);
+}

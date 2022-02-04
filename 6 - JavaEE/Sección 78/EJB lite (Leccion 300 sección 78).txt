@@ -1,0 +1,19 @@
+Java Web Profile:
+El perfil completo de JavaEE incluye varias APIs robustas y poderosas, sin embargo, el perfil Web (Web Profile) tiene
+acceso únicamente a ciertas APIs de JavaEE, las cuales son: Servlet 3.x, JSP, JSF 2.x, CDI, EJB 3.x, JTA, JPA 2.X y
+Bean Validation.
+Esto surgió debido a que muchas de las aplicaciones Java EE no necesitaban de todo el poder ni 
+las APIs tan robustas con las que cuenta, por lo tanto únicamente se agregaron a este perfil Web 
+las APIs más comunes.
+Si necesitamos de otras APIs como Java Mail, Web Services, etc, será necesario utilizar un servidor 
+de aplicaciones completo (full).
+Seleccionar un tipo de perfil dependerá de los requerimientos actuales y futuros de nuestra 
+aplicación empresarial, así que queda a consideración del Arquitecto/Programador la selección 
+del perfil Java EE más adecuado a sus necesidades.
+
+Comparación entre EJB y EJB lite:
+Los componentes predominantes en JavaEE son los EJB.
+Utilizar el perfil Web da por consiguiente utilizar EJB lite, ya que este último es la especificación mínima de APIs
+que podemos utilizar en un perfil Web.
+En el recurso PDF de la sección correspondiente del curso (78) se puede ver una tabla con todas las APIs que puede
+utilizar EJB lite en comparación a EJB.
