@@ -1,0 +1,26 @@
+Convenciones en Struts 2 Framework:
+- El uso de convenciones nos permite utilizar configuraciones por default en Struts 2.
+- Algunas de las convenciones que podemos utilizar son:
+  - Mapeo de Vistas (resultado o JSP a utilizar).
+  - Mapeo de Acciones. Cuando mandemos a llamar a una clase Java, también vamos a poder utilizar convenciones o
+    configuraciones por default para que se mander a llamar nuestras acciones.
+
+Mapeo de vistas:
+- Podemos mapear la vista si depositamos los JSPs en la siguiente carpeta: WEB-INF/content
+- Ejemplo:
+  - URL: http://localhost:8080/miApp/saludar
+  - Vista a llamar: saludar.jsp
+
+Mapeo de acciones:
+- Así como podemos mapear Vistas, también podemos mapear Acciones de manera automática.
+- Para ello, el nombre del paquete Java debe contener cualquier de las siguientes palabras:
+  struts, struts2, action, actions
+- El nombre de la calse debe terminar con la palabra Action
+
+Ejemplo de mapeo de Acciones:
+Ejemplo 1:
+- URL a utilizar: http://localhost:8080/miApp/saludar //nombre del path: /saludar
+- El nombre del paquete y de la clase debe ser: actions.SaludarAction
+Ejemplo 2:
+- URL a utilizar: http://localhost:8080/miApp/usuarios/registrar //nombre del parh: /usuarios/registrar
+- El nombre del paquete y de la clase debe ser: struts2.usuarios.RegistrarAction

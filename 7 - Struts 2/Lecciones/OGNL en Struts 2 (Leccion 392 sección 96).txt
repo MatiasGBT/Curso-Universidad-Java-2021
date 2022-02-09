@@ -1,0 +1,20 @@
+OGNL en Struts 2:
+OGNL significa Object Graphic Navigation Language. Es básicamente una comunicación entre nuestra clase Java (Action o
+clases de modelo) y los JSP´s (Vistas).
+Es decir, OGNL nos va a permitir establecer la comunicación entre nuestros JSP´s y nuestras clases Java que contienen
+la información que queremos desplegar en los JSP´s.
+
+Análisis de petición respuesta en Struts 2:
+Para iniciar una petición (invocar Action) tenemos distintos interceptores definidos por el framework de Struts,
+los cuales realizan todas las tareas necesarias como por ejemplo recuperar valores asociados a un formulario,
+para aplicar validaciones, para recuperar la información proveniente de un archivo de propiedades, los mensajes,
+el manejo de internacionalización, etc.
+Una vez procesados los interceptores, llega la solicitud hasta la clase de tipo Action, se ejecuta el método execute
+y aca es donde entra por primera vez el concepto de OGNL, en el cual, cualquier valor que se haya proporcionado de la
+vista hacia la clase Action, se va a almacenar en lo que se conoce como ActionContext (ThreadLocal).
+Dentro de ActionContext se encuentra el concepto de ValueStack. Dentro de ValueStack es donde almacenaremos la
+información que se recibe de las Vistas. A su vez, se podría guardar la información en los objetos Request, Session o
+Application.
+Una vez terminada la Acción, se invoca el Result, el cual comienza de nuevo el regreso de la petición, volviendo a 
+ejecutar los interceptores. Esta es la segunda vez que OGNL entra en acción. Todos los valores necesarios a desplegar
+en la Vista los toma de ActionContext y, finalmente, se muestra la Vista hacia nuestro cliente.

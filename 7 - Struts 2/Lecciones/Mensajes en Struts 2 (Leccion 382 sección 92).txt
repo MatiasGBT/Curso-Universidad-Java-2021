@@ -1,0 +1,16 @@
+Mensajes en Struts 2 Framework:
+Cuando trabajamos con mensajes en Struts, necesitamos relacionar varios elementos:
+- Lo primero que va a aparecer en nuestra aplicación para agregar el concepto de mensajes va a ser un archivo
+  de propiedades (ej: MiClaseAction.properties). Este archivo debe encontrarse en una ruta en especifico
+  y debe de contener el nombre del paquete identico al nombre de la clase (ej de clase: MiClaseAction.java).
+- La clase Java debe de extender de la clase ActionSupport.
+- El JSP puede acceder a través de la clase Java a los elementos definidos en el archivo de propiedades, o puede
+  directamente a dichos elementos.
+
+Accediendo a los mensajes desde el JSP:
+Hay varias maneras para que un JSP acceda a los archivos de propiedades;
+- <s:textfield key="nombre" name="nombreAtributo"/>
+  //Key permite indicar la llave definida dentro del archivo de propiedades, es decir, buscara en el archivo de
+  propiedades una llave llamada nombre y regresara su valor asociado.
+- <s:text name="nombre"/>
+- <s:property value="getText('nombre')"/>

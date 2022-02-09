@@ -1,0 +1,11 @@
+Internacionalización con Struts 2:
+Se refiere a la capacidad de manejar varios idiomas en nuestra aplicación.
+
+Configuración del idioma en el Navegador Web:
+Dependiendo del idioma configurado por default en los navegadores web (Chrome, Mozilla, Edge, etc), es idioma que se
+va a cargar por default en nuestra aplicación. A su vez, se puede modificar el idioma por medio de hipervínculos.
+
+Los idiomas se van a configurar de manera similar al manejo de mensajes, es decir, por medio de archivos de propiedades.
+Cada archivo de propiedades contiene las caracteristicas de un idioma en particular, es decir, va a contener la llave
+y el valor asociado a un idioma. Las llaves van a ser las mismas para todos los idiomas pero los valores asociados
+a esas llaves van a ir variando por cada archivo de propiedades.

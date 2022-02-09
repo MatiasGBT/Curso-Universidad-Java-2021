@@ -1,0 +1,44 @@
+Resultados en Struts 2:
+Como se vio anteriormente, todo inicia con una petición del cliente hacia la clase Action, la cual se conecta con
+las distintas capas que necesite, por ejemplo, con la capa de negocio. Posteriormente se procesa la lógica de negocio
+de la aplicación y se regresa la respuesta hacia la acción, la cual elige la vista a mostrar. En este último paso
+es donde se selecciona la respuesta o acción que se va a procesar, se envía el resultado.
+
+Respuesta dentro de la calse Action:
+Ejemplo:
+package actions;
+
+public class SaludarAction {
+
+	public String execute() {
+		return "exito"; //Esta es la cadena que definira la vista a mostrar
+	}
+}
+
+Constantes de la interface Action:
+La interface Action tiene varias variables constantes como se vio anteriormente. Estas se utilizan para diversos mótivos
+como:
+- SUCCESS: Para marcar que todo salió bien y redirigir a la vista correspondiente.
+- INPUT: Para marcar que algo de un formulario salió mal y hay que rellenar los datos.
+- LOGIN: Para envíar al cliente a una página de login.
+- ERROR: Puede redirigir a una página de error.
+- NONE: Podría quedarse dentro de la misma página sin ejecutar ninguna acción.
+
+Archivo struts.xml y la respuesta:
+...
+<struts>
+	<package name="usuario" namespace="/" extends="struts-default">
+	
+		<!--Primera acción definida (simple)-->
+		<action name="login">
+			<result>pages/login.jsp</result>
+		</action>
+
+		<!--Segunda acción definida-->
+		<action name="validarUsuario" class="actions.LoginAction">
+			<result name="success">pages/bienvenido.jsp</result>
+			<result name="input">pages/login.jsp</result>
+		</action>
+	...
+	</package>
+</struts>

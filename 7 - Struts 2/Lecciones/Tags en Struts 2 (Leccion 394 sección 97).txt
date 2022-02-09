@@ -1,0 +1,24 @@
+Ubicación del TLD de los Tags de Struts 2:
+Todos los Tags, al trabajar con Servlets y JSP´s, provienen de un archivo llamado TLD.
+La definición de los Tags de Struts se encuentra en el archivo struts-tags.tld ubicado en la carpeta META-INF de
+la dependencia de Struts 2.
+
+Uso del TLD de los Tags de Struts 2:
+Ejemplo de uso:
+<%@taglib prefix="s" uri="/struts-tags"%> //Esto se encuentra configurado en el TLD, no se busca de internet.
+<html>
+	<head>...</head>
+	<body>
+		<s:form>
+			<s:textfield label="Nombre" name="persona.nombre"/>
+			<s:submit value="Enviar"/>
+		</s:form>
+	</body>
+</html>
+Como se puede ver, tenemos distintos elementos para utilizar en Struts 2.
+
+Tipos de tags en Struts 2:
+- Tags de control: If, iterator, etc.
+- Tags de manipulación de datos: Hipervínculos, url, action, etc.
+- Tags de manejo de formularios: form, button, inputText, etc.
+- UI: Manejo de errores, manejo de elementos div, etc.

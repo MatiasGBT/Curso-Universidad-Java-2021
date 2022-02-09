@@ -1,0 +1,70 @@
+Tiles en Struts 2:
+Tiles nos permite utilizar plantillas. En estas se pueden definir diversas secciones como el header, el menú, el body,
+el footer, etc.
+Para definir estas plantillas, se requieren varios archivos, tales como:
+
+Librería de Tiles:
+<dependency>
+	<groupId>org.apache.struts</groupId>
+	<artifactId>struts2-tiles-plugin</artifactId>
+	<version>(última versión)</version>
+</dependency>
+
+Archivo web.xml:
+...
+<context-param>
+	<param-name>
+		org.apache.tiles.definition.DefinitionFactory.DEFINITIONS_CONFIG
+	</param-name>
+	<param-value>/WEB-INF/tiles.xml</param-value>
+</context-param>
+
+<listener>
+	<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
+</listener>
+...
+
+Archivo tiles.xml:
+...
+<tiles-definitions>
+	<definition name="layout" template="/WEB-INF/content/layout.jsp">
+		<put-attribute name="title" value="Plantilla"/>
+		<put-attribute name="header" value="/WEB-INF/content/header.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/content/menu.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/content/body.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/content/footer.jsp"/>
+	</definition>
+
+	<definition name="bienvenidoTile extends="layout">
+		<put-attribute name="title" value="Bienvenido"/>
+		<put-attribute name="body" value="/WEB-INF/content/bienvenido.jsp"/>
+	</definition>
+
+	<definition name="personasTile extends="layout">
+		<put-attribute name="title" value="Personas"/>
+		<put-attribute name="body" value="/WEB-INF/content/personas.jsp"/>
+	</definition>
+</tiles-definitions>
+
+Archivo struts.xml (no existen anotaciones para esto):
+...
+<constant name="struts.convention.default.parent.package"
+	  value="mx.com.gm.actions"/>
+
+<package name="mx.com.gm.actions" extends="struts-default">
+	<result-types>
+		<result-type name="tiles"
+			     class="org.apache.struts2.views.tiles.TilesResult"/>
+	</result-types>
+</package>
+
+Clases Action:
+En la anotación de @Result, estas tienen que indicar que el tipo de resultado es de tipo tiles.
+
+JSP de tipo layout:
+Tiene que poseer el taglib de tiles, es decir: <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+Una vez definido este taglib, ya podemos utilizar los tags de Tiles, como puede ser
+<tiles:insertAttribute name="header"/> para especificar las secciones que utilizaremos en la plantilla.
+
+JSP que se utiliza para reemplazar en Tile:
+Son JSP´s normales, por lo que pueden contener cualquier información

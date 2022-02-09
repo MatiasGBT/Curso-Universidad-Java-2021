@@ -1,0 +1,56 @@
+Anotaciones en Struts 2:
+Manejar anotaciones en Struts 2 permite reemplazar casi en su totalidad en archivo de struts.xml.
+Si bien en algunos casos no es posible eliminar este archivo por completo, en la mayoría de los casos si se podra hacer.
+
+Anotaciones de tipo Action:
+package actions;
+
+import org.apache.struts2.convention.annotation.Action;
+
+public class SaludarAction {
+
+	@Action("SaludarAction")
+	public String execute() {
+		return "exito";
+	}
+}
+
+Manejo de resultados con anotaciones:
+package actions;
+
+import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
+
+//Esta anotación no es necesaria con Convenciones, pero sirve para casos complejos (como proximo ejemplo a este)
+@Result (name = "success", location = "WEB-INF/content/login.jsp")
+public class LoginAction extends ActionSupport {
+
+	@Action("login")
+	@Override
+	public String execute() {
+		return SUCCESS;
+	}
+}
+
+Varios tipos de respuesta en la clase Action:
+...
+@Results({
+	@Result(name = "success", location="WEB-INF/content/bienvenido.jsp"),
+	@Result(name = "input", location="login", type = "redirectAction")
+})
+public class ValidarUsuarioAction extends ActionSupport {
+
+	...
+
+	@Action("validarUsuario")
+	@Override
+	public String execute() {
+		if("admin".equals(this.usuario)) {
+			return SUCCESS;
+		} else {
+			return INPUT;
+		}
+	}
+}

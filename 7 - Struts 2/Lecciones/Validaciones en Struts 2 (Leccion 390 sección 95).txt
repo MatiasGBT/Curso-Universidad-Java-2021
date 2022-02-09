@@ -1,0 +1,26 @@
+Validaciones en Struts 2:
+Struts 2 incluye el concepto de validaciones a la hora de enviar formularios hacia la calse de tipo Action, por lo que,
+si extendemos una clase de la calse ActionSupport, esta ya podra procesar validaciones.
+
+Validaciones en la clase de tipo Action:
+public class ValidarUsuarioAction extends ActionSupport {
+
+	private String usuario;
+	private String password;
+
+	@Override
+	public void validate() {
+		if (this.usuario == null || "".equals(this.usuario.trim())) {
+			addFieldError("usuario", "Valor usuario inválido"); //Para mandar un mensaje de error al JSP
+		} else if (!usuarioValido) { //Es diferente de cadena vacía pero no es un valor valido
+			//No esta relacionado con el campo, si no que es un error más generico
+			addActionError("Valor usuario inválido");
+		}
+
+		if (this.password == null || "".equals(this.password.trim())) {
+			addFieldError("password", getText("val.password"));
+		} else if (this.password.length<3) {
+			addFieldError("password", getText("val.pass.min.length"));
+		}
+	}
+}

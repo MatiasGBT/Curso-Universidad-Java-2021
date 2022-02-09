@@ -1,0 +1,77 @@
+Acciones en Struts 2 Framework:
+- Una acción es una de las partes más importantes de Struts.
+- Una acción representa el Controlador en el patrón MVC.
+- Existen distintos tipos de Acción en Struts, dependiendo de lo que se quiera realizar.
+- Aunque no es necesario extender de ninguna interface, es posible escoger entre varias.
+
+Flujo de llamado a una Acción:
+Inicia con la petición del usuario (Request), la cual es procesada por la clase Action y, posteriormente, esta clase
+ejecuta la Lógica de Negocio de la aplicación (esta lógica puede ser conectarse a una base de datos, utilizar
+un Web Service o cualquier otro tipo de información que se necesite procesar por parte de la aplicación).
+Una vez que se ejecuta la lógica de negocio, se regresa al controlador de Struts (la Acción) y esta selecciona
+la Vista a ejecutar (Response).
+
+Creación de una clase de tipo Action:
+
+Ejemplo 1:
+package actions;
+
+public class SaludarAction {
+	
+	public String execute() {
+		return "exito";
+	}
+}
+
+Ejemplo 2:
+package actions;
+
+import com.opensymphony.xwork2.Action;
+
+public class SaludarAction implements Action {
+	
+	@Override
+	public String execute() {
+		return "exito";
+	}
+}
+
+Constantes de la interface Action:
+package com.opensymphony.xwork2;
+
+public interface Action {
+	public static final String SUCCESS = "success";
+
+	public static final String NONE = "none";
+
+	public static final String ERROR = "error";
+
+	public static final String INPUT = "input";
+
+	public static final String LOGIN = "login";
+
+	public String execute() throws Exception;
+}
+
+Clase ActionSupport:
+En vez de implementar la interface Action, se puede extender de la clase ActionSupport, la cual posee más características:
+- Ya implementa la interface Action.
+- Implementa la interface LocalProvider (para el manejo de internacionalización).
+- Implementa la interface TextProvider (para obtener mensajes de archivos de propiedades).
+- Implementa la interface Validateable (para agregar el concepto de validaciones cuando trabajamos con formularios).
+- Implementa la interface ValidationAware (para que se aplique de manera automática algunas validaciones al trabajar
+  con formularios).
+
+Características de la clase ActionSupport:
+public class ActionSupport implements Action, Validateable, ValidationAware, TextProfider, LocaleProvider, Serializable {
+
+	//Se pueden sobreescribir métodos como validate para la validación de datos:
+	validate() {
+		...
+	}
+
+	//O métodos como getText() para el concepto de internacionalización:
+	getText() {
+		...
+	}
+}
