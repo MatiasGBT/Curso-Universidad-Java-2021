@@ -1,0 +1,4 @@
+domain\Persona.class
+test\OperacionesHibernateJpa.class
+dao\PersonaDao.class
+test\HolaMundoHibernate.class

@@ -1,0 +1,6 @@
+Mapeo de asociaciones:
+Las asociaciones en Hibernate y JPA son las mismas que se manejan en la teoría de bases de datos relacionales,
+es decir: 1 a 1, 1 a muchos/muchos a 1 y muchos a muchos.
+Hibernate y JPA soportan estas relaciones en los archivos de mapeo de cada clase de Entidad o por medio de anotaciones
+Java.
+La relación Muchos a Muchos es confusa y no es una buena práctica. Hay que normalizar estos casos.

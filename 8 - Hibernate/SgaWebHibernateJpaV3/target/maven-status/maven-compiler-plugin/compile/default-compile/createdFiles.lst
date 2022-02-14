@@ -1,0 +1,17 @@
+dao\CursoDao.class
+test\ciclovida\Estado3ModificarObjetoPersistente.class
+dao\AlumnoDao.class
+dao\ContactoDao.class
+dao\DomicilioDao.class
+test\TestDaos.class
+domain\Alumno.class
+test\cascade\PersistenciaCascadaTest.class
+domain\Curso.class
+test\ciclovida\Estado2RecuperarObjetoPersistente.class
+dao\GenericDao.class
+dao\AsignacionDao.class
+test\ciclovida\Estado1Persistido.class
+domain\Asignacion.class
+test\ciclovida\Estado4EliminarObjeto.class
+domain\Domicilio.class
+domain\Contacto.class

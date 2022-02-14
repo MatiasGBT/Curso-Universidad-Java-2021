@@ -1,0 +1,67 @@
+Ciclo de vida de objetos de Entidad:
+El primer paso es la creación del nuevo objeto. Cuando esto pasa y el objeto no esta guardado en la BD, este se
+encuentra en estado Transitivo (Transient).
+Una vez que guardamos este objeto en la BD utilizando los métodos save(), saveOrUpdate() o persist(), este se encuentra
+en el estado Persistente/Persistido (Persistent). Este estado significa que ya se guardo la información en la BD.
+Una vez que se cierra la transacción en la que se trabajo este objeto, este pasa al estado de Separado (Detached).
+También se pasa al estado de Separado cuando se ejecutan los siguientes métodos: evict(), close(), clear(). Los dos
+últimos métodos afectan a todas las instancias que están en la Sesión actual.
+Si a un objeto en estado de Separado le ejecutamos los siguientes métodos: update(), saveOrUpdate(), lock(), merge(),
+este objeto pasa de vuelta al estado de Persistido.
+Si ejecutamos el método delete() en un objeto en estado Persistido, este pasa de vuelta al estado Transitivo, sin embargo,
+este objeto ya no se puede volver a persistir en la BD. Este objeto ya esta listo para eliminarse por el garbage collector.
+Si el objeto ya esta persistido en la BD, podemos recuperarlo utilizando los siguientes métodos:
+get(), load(), find(), iterate(), etc.
+
+Algunos estados de los objetos de Entidad:
+Estado Transitivo (Transient):
+- Los objetos de Entidad nuevos NO son guardados directamente en la Base de Datos (BD).
+- No estan asociados a un registro en la BD.
+- Se consideran no transaccionales.
+Estado Persistente (Persistent):
+- Un objeto persistente tiene asociado un registro en la BD.
+- Los objetos persistentes siempre están asociados con una Sesión y son transaccionales. Su estado se sincroniza con
+  la BD al terminar la transacción.
+Estado Separado (Detached):
+- Estos objetos tienen asociado un registro en la BD, pero su estado no esta sincronizado con esta.
+- Todos los objetos recuperados en una transacción se convierten en detached una vez que termina la transacción.
+
+Persistir un objeto en Hibernate/JPA:
+1- Se crea un objeto de Entidad, el cual esta en estado Transitivo.
+2- Iniciamos la transacción. Cuando hacemos esto, se crea una Sesión (Contexto Persistente).
+3- Ejecutamos el método save() o persist() (SQL) y el objeto pasa al estado de Persistente.
+4- Se ejecuta un commit o rollback de la transacción. En este momento es cuando se ejecuta el método flush(),
+   el cual vacía cualquier cambio pendiente que tuvieramos en el objeto y se sincroniza el estado con la BD.
+5- Termina la transacción (método close()) y se cierra la Sesión (Contexto Persistente). El objeto pasa a estado
+   de Detached.
+
+Recuperar un objeto en Hibernate/JPA:
+Para recuperar un objeto en Hibernate no es necesario iniciar una transacción, sin embargo, lo común es que si ya
+estamos dentro de una transacción, podemos utilizar el método de load(id), get(id) o find(id) (proporcionar el id),
+pasando este objeto al estado de Persistente de nuevo. Si cerramos la transacción pasamos de nueva cuenta al
+estado de Detached.
+Para hacer esto, este objeto ya debe tener una representación en la Base de Datos.
+
+Modificar un objeto en Hibernate/JPA:
+1- Iniciamos la transacción.
+2- Recuperamos el objeto (método get(id) y demás). El objeto pasa a estado Persistente.
+3- Se cierra la transacción (clse()) y el objeto pasa al estado de Detached.
+4- Modificamos alguno/s de sus valores (setValor(nuevoValor)).
+5- Iniciamos una segunda transacción.
+6- Utilizamos el método update() o merge() (el objeto pasa a estado Persistente).
+7- Se hace commit o rollback y se termina la segunda transacción. El objeto pasa al estado de Detached.
+
+Modificar un objeto en una Sesión larga:
+1- Iniciamos la transacción.
+2- Ejecutamos el método correspondiente para buscar (por ejemplo get(id)). El objeto pasa a estado Persistente.
+3- Modificamos alguno/s de sus valores (setValor(nuevoValor)).
+4- Al estar dentro de la misma transacción, se va a guardar cualquier cambio pendiente (flush()). Se termina la
+   transacción (close()). El objeto pasa a estado de Detached.
+
+Eliminar un objeto en Hibernate/JPA:
+1- Iniciamos la transacción.
+2- Recuperamos el objeto (get(id) u otros). Objeto en estado Persistido.
+3- Se cierra la transacción. Objeto en estado Separado (Detached).
+4- Iniciamos una segunda transacción.
+5- Ejecutamos el metodo delete() o remove(). Objeto en estado Persistido.
+6- Termina la segunda transacción. Objeto en estado Transitivo. Este objeto ya no se puede volver a sincronizar con la BD.

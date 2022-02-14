@@ -1,0 +1,5 @@
+Si recordamos nuestro diagrama de entidad relación, tenemos la tabla de Alumno, la cual tiene relacionadas las tablas
+de Domicilio y Contacto.
+La persistencia en cascada quiere decir que, por ejemplo, en este caso cuando tratemos de persistir un registro de
+la tabla de alumno, podremos guardar de manera automática las tablas relacionadas como lo son domicilio y contacto.
+Sin embargo, para esto tendremos que modificar la configuración de la clase de entidad de la tabla de Alumno.
