@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--Hay que agregar el xml en la etiqueta html para poder manejar información dinámica-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8"> <!--Es importante dejar esta etiqueta-->
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"></header>
+        
+        <a th:href="@{/agregar}">Crear persona</a>
+        <div th:if="${personas!=null && !personas.empty}">
+            <table border="1">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+                <tr th:each="persona : ${personas}">
+                    <td th:text="${persona.nombre}"></td>
+                    <td th:text="${persona.apellido}"></td>
+                    <td th:text="${persona.email}"></td>
+                    <td th:text="${persona.telefono}"></td>
+                    <td><a th:href="@{/editar/} + ${persona.idPersona}" th:text="Editar"/></td>
+                    <td><a th:href="@{/eliminar(idPersona=${persona.idPersona})}" th:text="Eliminar"/></td>
+                    <!--El caso de editar esta hecho con un PathParam y el de eliminar con un QueryParam.
+                    Según busque, es recomendable utilizar PathParam para valores únicos (como el id)
+                    y QueryParam para buscar entre varios objetos que tengan cierto valor en un atributo
+                    Ej: GET /autos?color=azul el atributo color del auto debe ser azul, pero puede haber muchos
+                    autos con el valor azul en el atributo color.-->
+                </tr>
+            </table>
+        </div>
+        <div th:if="${personas==null || personas.empty}">
+            <p>La lista de persona esta vacía</p>
+        </div>
+        
+        <footer th:replace="layout/plantilla :: footer"></footer>
+    </body>
+</html>

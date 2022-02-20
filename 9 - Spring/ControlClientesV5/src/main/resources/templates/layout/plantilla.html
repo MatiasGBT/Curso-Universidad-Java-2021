@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Plantilla</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header th:fragment="header">
+            <h1 th:text="#{plantilla.titulo}">Titulo</h1> <!--Con th:text reemplazamos el contenido por el texto del mensaje-->
+        </header>
+        
+        <footer th:fragment="footer">
+            <p> [[#{plantilla.pie-pagina}]] <a href="https://github.com/MatiasGBT?tab=repositories" target="_blank">Github</a></p>
+            <!--Si lo hacemos con th:text, se perdera el link a github, por ende utilizamos este método diferente-->
+        </footer>
+    </body>
+</html>
